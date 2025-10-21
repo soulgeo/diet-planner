@@ -1,0 +1,33 @@
+# Build results
+/bin/
+/obj/
+
+# Visual Studio & Rider
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# .NET specific
+*.dll
+*.pdb
+*.exe
+*.cache
+
+# Avalonia / XAML intermediate (if any)
+*.g.cs
+*.g.i.cs
+*_generated.cs
+
+# Rider IDE
+.idea/
+
+# NuGet packages (if you don’t commit them)
+/packages/
+/*.nupkg
+
