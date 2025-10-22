@@ -5,10 +5,9 @@ public class Plan
     public WeightGoal WeightGoal { get; set; }
     public PlanType PlanType { get; set; }
 
-    // Daily Calorie Target
     public double DailyCalorieTarget => ((float)WeightGoal / 100) * patient.TDEE;
 
-    // Daily Macro Constraints
+    // Daily macro constraints
     public double MinProteinG => 1.2 * patient.WeightKg;
     public double MaxProteinG => 2.4 * patient.WeightKg;
     public double MinFatG => 0.2 * DailyCalorieTarget / 9;
@@ -16,6 +15,7 @@ public class Plan
     public double MinCarbG => (DailyCalorieTarget - (MaxProteinG * 4 + MaxFatG * 9)) / 4;
     public double MaxCarbG => (DailyCalorieTarget - (MinProteinG * 4 + MinFatG * 9)) / 4;
 
+    // Target macros based on plan preference
     public double TargetProteinG => PlanType switch
     {
         PlanType.Balanced => (MinProteinG + MaxProteinG) / 2,
