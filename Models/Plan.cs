@@ -1,48 +1,28 @@
+using System;
+
 public class Plan
 {
     public Patient patient { get; set; }
-
     public WeightGoal WeightGoal { get; set; }
-    public PlanType PlanType { get; set; }
-
     public double DailyCalorieTarget => ((float)WeightGoal / 100) * patient.TDEE;
 
-    // Daily macro constraints
-    public double MinProteinG => 1.2 * patient.WeightKg;
-    public double MaxProteinG => 2.4 * patient.WeightKg;
-    public double MinFatG => 0.2 * DailyCalorieTarget / 9;
-    public double MaxFatG => 0.35 * DailyCalorieTarget / 9;
-    public double MinCarbG => (DailyCalorieTarget - (MaxProteinG * 4 + MaxFatG * 9)) / 4;
-    public double MaxCarbG => (DailyCalorieTarget - (MinProteinG * 4 + MinFatG * 9)) / 4;
+    // Target macros
+    public int ProteinPercent { get; }
+    public int FatPercent { get; }
+    public int CarbPercent { get; }
 
-    // Target macros based on plan preference
-    public double TargetProteinG => PlanType switch
-    {
-        PlanType.Balanced => (MinProteinG + MaxProteinG) / 2,
-        PlanType.LowFat => 0,
-        PlanType.LowCarb => 0,
-        PlanType.HighProtein => MaxProteinG,
-        _ => 0
-    };
-    public double TargetFatG => PlanType switch
-    {
-        PlanType.Balanced => (2 * MinFatG + MaxFatG) / 2,
-        PlanType.LowFat => MinFatG,
-        PlanType.LowCarb => 0,
-        PlanType.HighProtein => 0,
-        _ => 0
-    };
-    public double TargetCarbG => PlanType switch
-    {
-        PlanType.Balanced => (2 * MinCarbG + MaxCarbG) / 2,
-        PlanType.LowFat => 0,
-        PlanType.LowCarb => MinCarbG,
-        PlanType.HighProtein => 0,
-        _ => 0
-    };
+    public double TargetProteinG => (ProteinPercent / 100) * DailyCalorieTarget / 4;
+    public double TargetFatG => (FatPercent / 100) * DailyCalorieTarget / 9;
+    public double TargetCarbG => (CarbPercent / 100) * DailyCalorieTarget / 4;
 
-    public Plan(Patient patient)
+    public Plan(Patient patient, int proteinPercent, int fatPercent, int carbPercent)
     {
+        if (Math.Abs(proteinPercent + fatPercent + carbPercent - 100) > 0.001)
+            throw new ArgumentException("Macro percentages must sum to 100");
+
         this.patient = patient;
+        ProteinPercent = proteinPercent;
+        FatPercent = fatPercent;
+        CarbPercent = carbPercent;
     }
 }
