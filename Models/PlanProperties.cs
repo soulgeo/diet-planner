@@ -1,12 +1,8 @@
 using System;
+using System.Collections.Generic;
 
 public class PlanProperties
 {
-    private int _minMealsPerDay = 3;
-    private int _maxMealsPerDay = 6;
-
-    private int _mealsPerDay;
-
     public Patient patient { get; set; }
     public WeightGoal WeightGoal { get; set; }
 
@@ -17,22 +13,11 @@ public class PlanProperties
 
     public double DailyCalorieTarget => ((float)WeightGoal / 100) * patient.TDEE;
 
-    public double TargetProteinG => (ProteinPercent / 100) * DailyCalorieTarget / 4;
-    public double TargetFatG => (FatPercent / 100) * DailyCalorieTarget / 9;
-    public double TargetCarbG => (CarbPercent / 100) * DailyCalorieTarget / 4;
+    public double TargetProteinG => ProteinPercent * 0.01 * DailyCalorieTarget / 4;
+    public double TargetFatG => FatPercent * 0.01 * DailyCalorieTarget / 9;
+    public double TargetCarbG => CarbPercent * 0.01 * DailyCalorieTarget / 4;
 
-    public int MealsPerDay
-    {
-        get => _mealsPerDay;
-        set
-        {
-            if (value < _minMealsPerDay || value > _maxMealsPerDay)
-            {
-                throw new ArgumentException("Meals per day must be between the allowed range.");
-            }
-            _mealsPerDay = value;
-        }
-    }
+    public HashSet<MealType> MealTypes { get; set; }
 
     public PlanProperties(Patient patient, int proteinPercent, int fatPercent, int carbPercent)
     {
@@ -40,6 +25,7 @@ public class PlanProperties
             throw new ArgumentException("Macro percentages must sum to 100");
 
         this.patient = patient;
+        MealTypes = new HashSet<MealType>();
         ProteinPercent = proteinPercent;
         FatPercent = fatPercent;
         CarbPercent = carbPercent;

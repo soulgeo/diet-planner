@@ -1,14 +1,19 @@
 using System.Collections.Generic;
 
-public record Meal
-(
-    int MealID,
-    string Name,
-    MealType MealType,
-    int Calories,
-    double Protein,
-    double Carbs,
-    double Fat,
-    List<Food> Contents
-);
+public class Meal
+{
+    public int MealID { get; set; }
+    public string Name { get; set; } = "name";
+    public MealType MealType { get; set; }
+    public int Calories { get; set; }
+    public double Protein { get; set; }
+    public double Carbs { get; set; }
+    public double Fat { get; set; }
+    public List<Food>? Contents { get; set; }
+
+    public Meal(MealType mealType)
+    {
+        this.MealType = mealType;
+    }
+};
 
