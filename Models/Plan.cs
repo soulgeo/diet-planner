@@ -9,13 +9,12 @@ public class Plan
     private readonly List<PlanDay> _planDays;
     public IReadOnlyList<PlanDay> PlanDays => _planDays.AsReadOnly();
 
-    private readonly List<Meal> _meals;
-    public IReadOnlyList<Meal> Meals => _meals.AsReadOnly();
+    public List<Meal> Meals { get; set; }
 
     public Plan(PlanProperties planProperties)
     {
         this.PlanProperties = planProperties;
-        _meals = new List<Meal>();
+        Meals = new List<Meal>();
         _planDays = new List<PlanDay>();
         foreach (DayOfWeek d in Enum.GetValues(typeof(DayOfWeek)))
         {

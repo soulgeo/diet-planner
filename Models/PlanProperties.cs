@@ -11,7 +11,7 @@ public class PlanProperties
     public int FatPercent { get; }
     public int CarbPercent { get; }
 
-    public double DailyCalorieTarget => ((float)WeightGoal / 100) * patient.TDEE;
+    public int DailyCalorieTarget => (int)Math.Round(((float)WeightGoal / 100) * patient.TDEE);
 
     public double TargetProteinG => ProteinPercent * 0.01 * DailyCalorieTarget / 4;
     public double TargetFatG => FatPercent * 0.01 * DailyCalorieTarget / 9;

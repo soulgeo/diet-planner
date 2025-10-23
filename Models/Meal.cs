@@ -5,10 +5,10 @@ public class Meal
     public int MealID { get; set; }
     public string Name { get; set; } = "name";
     public MealType MealType { get; set; }
-    public int Calories { get; set; }
-    public double Protein { get; set; }
-    public double Carbs { get; set; }
-    public double Fat { get; set; }
+    public int CaloriesKcal { get; set; }
+    public double ProteinG { get; set; }
+    public double CarbG { get; set; }
+    public double FatG { get; set; }
     public List<Food>? Contents { get; set; }
 
     public Meal(MealType mealType)
