@@ -9,10 +9,11 @@ public class Meal
     public double ProteinG { get; set; }
     public double CarbG { get; set; }
     public double FatG { get; set; }
-    public List<Food>? Contents { get; set; }
+    public List<Food> Contents { get; set; }
 
     public Meal(MealType mealType)
     {
+        Contents = new List<Food>();
         this.MealType = mealType;
     }
 };
