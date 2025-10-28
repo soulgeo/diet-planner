@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DietPlanner.Models;
+﻿using DietPlanner.Models;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DietPlanner.DataAccess

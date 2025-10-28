@@ -5,9 +5,9 @@ namespace DietPlanner.DataAccess
 {
     public class DietContext : DbContext
     {
-        public DbSet<Food> Foods { get; set; }
-        public DbSet<Meal> Meals { get; set; }
-        public DbSet<MealContent> MealContents { get; set; }
+        public DbSet<Food> Foods { get; set; } = null!;
+        public DbSet<Meal> Meals { get; set; } = null!;
+        public DbSet<MealContent> MealContents { get; set; } = null!;
 
         private string path = @"C:\Users\User\Documents\sqlite\DietPlanner.db";
 
