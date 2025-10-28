@@ -15,6 +15,6 @@ namespace DietPlanner.Models
 
         [Required]
         [Column("meal_type")]
-        public string MealType { get; set; } = null!;
+        public MealType MealType { get; set; }
     }
 }

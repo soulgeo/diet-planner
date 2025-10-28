@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace DietPlanner.Models
 {
     [Table("Meal_Foods")]
-    public class MealFood
+    public class MealContent
     {
         [Column("meal_id")]
         public int MealId { get; set; }
