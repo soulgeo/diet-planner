@@ -29,6 +29,6 @@ namespace DietPlanner.Models
         [Required]
         public double Fat { get; set; }
 
-        public string Allergen { get; set; } = null!;
+        public Allergen Allergen { get; set; } 
     }
 }

@@ -16,7 +16,7 @@ namespace DietPlanner.DataAccess
                     Protein = 0.3,
                     Carbs = 14,
                     Fat = 0.2,
-                    Allergen = Allergen.None.ToString()
+                    Allergen = Allergen.None
                 },
                 new Food
                 {
@@ -26,7 +26,7 @@ namespace DietPlanner.DataAccess
                     Protein = 1.1,
                     Carbs = 23,
                     Fat = 0.3,
-                    Allergen = Allergen.None.ToString()
+                    Allergen = Allergen.None
                 },
                 new Food
                 {
@@ -36,7 +36,7 @@ namespace DietPlanner.DataAccess
                     Protein = 31,
                     Carbs = 0,
                     Fat = 3.6,
-                    Allergen = Allergen.None.ToString()
+                    Allergen = Allergen.None
                 },
                 new Food
                 {
@@ -46,7 +46,7 @@ namespace DietPlanner.DataAccess
                     Protein = 20,
                     Carbs = 0,
                     Fat = 13,
-                    Allergen = Allergen.Fish.ToString()
+                    Allergen = Allergen.Fish
                 },
                 new Food
                 {
@@ -56,7 +56,7 @@ namespace DietPlanner.DataAccess
                     Protein = 3.7,
                     Carbs = 11,
                     Fat = 0.6,
-                    Allergen = Allergen.None.ToString()
+                    Allergen = Allergen.None
                 },
                 new Food
                 {
@@ -66,7 +66,7 @@ namespace DietPlanner.DataAccess
                     Protein = 2.6,
                     Carbs = 23,
                     Fat = 0.9,
-                    Allergen = Allergen.None.ToString()
+                    Allergen = Allergen.None
                 },
                 new Food
                 {
@@ -76,7 +76,7 @@ namespace DietPlanner.DataAccess
                     Protein = 21,
                     Carbs = 22,
                     Fat = 49,
-                    Allergen = Allergen.Nuts.ToString()
+                    Allergen = Allergen.Nuts
                 },
                 new Food
                 {
@@ -86,7 +86,7 @@ namespace DietPlanner.DataAccess
                     Protein = 10,
                     Carbs = 3.6,
                     Fat = 2,
-                    Allergen = Allergen.Dairy.ToString()
+                    Allergen = Allergen.Dairy
                 },
                 new Food
                 {
@@ -96,7 +96,7 @@ namespace DietPlanner.DataAccess
                     Protein = 13,
                     Carbs = 1.1,
                     Fat = 11,
-                    Allergen = Allergen.Egg.ToString()
+                    Allergen = Allergen.Egg
                 },
                 new Food
                 {
@@ -106,7 +106,7 @@ namespace DietPlanner.DataAccess
                     Protein = 2.9,
                     Carbs = 3.6,
                     Fat = 0.4,
-                    Allergen = Allergen.None.ToString()
+                    Allergen = Allergen.None
                 },
                 new Food
                 {
@@ -116,7 +116,7 @@ namespace DietPlanner.DataAccess
                     Protein = 1.6,
                     Carbs = 20,
                     Fat = 0.1,
-                    Allergen = Allergen.None.ToString()
+                    Allergen = Allergen.None
                 },
                 new Food
                 {
@@ -126,7 +126,7 @@ namespace DietPlanner.DataAccess
                     Protein = 0,
                     Carbs = 0,
                     Fat = 100,
-                    Allergen = Allergen.None.ToString()
+                    Allergen = Allergen.None
                 },
                 new Food
                 {
@@ -136,7 +136,7 @@ namespace DietPlanner.DataAccess
                     Protein = 16.9,
                     Carbs = 66.3,
                     Fat = 6.9,
-                    Allergen = Allergen.Gluten.ToString()
+                    Allergen = Allergen.Gluten
                 },
                 new Food
                 {
@@ -146,7 +146,7 @@ namespace DietPlanner.DataAccess
                     Protein = 9,
                     Carbs = 20,
                     Fat = 0.4,
-                    Allergen = Allergen.None.ToString()
+                    Allergen = Allergen.None
                 },
                 new Food
                 {
@@ -156,7 +156,7 @@ namespace DietPlanner.DataAccess
                     Protein = 28,
                     Carbs = 0,
                     Fat = 1.3,
-                    Allergen = Allergen.Fish.ToString()
+                    Allergen = Allergen.Fish
                 },
                 new Food
                 {
@@ -166,7 +166,7 @@ namespace DietPlanner.DataAccess
                     Protein = 0.7,
                     Carbs = 3.6,
                     Fat = 0.1,
-                    Allergen = Allergen.None.ToString()
+                    Allergen = Allergen.None
                 },
                 new Food
                 {
@@ -176,7 +176,7 @@ namespace DietPlanner.DataAccess
                     Protein = 0.9,
                     Carbs = 3.9,
                     Fat = 0.2,
-                    Allergen = Allergen.None.ToString()
+                    Allergen = Allergen.None
                 },
                 new Food
                 {
@@ -186,7 +186,7 @@ namespace DietPlanner.DataAccess
                     Protein = 19,
                     Carbs = 0,
                     Fat = 15,
-                    Allergen = Allergen.None.ToString()
+                    Allergen = Allergen.None
                 },
                 new Food
                 {
@@ -196,7 +196,7 @@ namespace DietPlanner.DataAccess
                     Protein = 4.4,
                     Carbs = 21,
                     Fat = 1.9,
-                    Allergen = Allergen.None.ToString()
+                    Allergen = Allergen.None
                 },
                 new Food
                 {
@@ -206,7 +206,7 @@ namespace DietPlanner.DataAccess
                     Protein = 0.7,
                     Carbs = 7.7,
                     Fat = 0.3,
-                    Allergen = Allergen.None.ToString()
+                    Allergen = Allergen.None
                 },
                 new Food
                 {
@@ -216,7 +216,7 @@ namespace DietPlanner.DataAccess
                     Protein = 2,
                     Carbs = 9,
                     Fat = 15,
-                    Allergen = Allergen.None.ToString()
+                    Allergen = Allergen.None
                 },
                 new Food
                 {
@@ -226,7 +226,7 @@ namespace DietPlanner.DataAccess
                     Protein = 11,
                     Carbs = 3.4,
                     Fat = 4.3,
-                    Allergen = Allergen.Dairy.ToString()
+                    Allergen = Allergen.Dairy
                 },
                 new Food
                 {
@@ -236,7 +236,7 @@ namespace DietPlanner.DataAccess
                     Protein = 13,
                     Carbs = 41,
                     Fat = 3.4,
-                    Allergen = Allergen.Gluten.ToString()
+                    Allergen = Allergen.Gluten
                 },
                 new Food
                 {
@@ -246,7 +246,7 @@ namespace DietPlanner.DataAccess
                     Protein = 29,
                     Carbs = 0,
                     Fat = 1,
-                    Allergen = Allergen.None.ToString()
+                    Allergen = Allergen.None
                 },
                 new Food
                 {
@@ -256,7 +256,7 @@ namespace DietPlanner.DataAccess
                     Protein = 8.9,
                     Carbs = 27,
                     Fat = 2.6,
-                    Allergen = Allergen.None.ToString()
+                    Allergen = Allergen.None
                 },
                 new Food
                 {
@@ -266,7 +266,7 @@ namespace DietPlanner.DataAccess
                     Protein = 1,
                     Carbs = 6,
                     Fat = 0.3,
-                    Allergen = Allergen.None.ToString()
+                    Allergen = Allergen.None
                 },
                 new Food
                 {
@@ -276,7 +276,7 @@ namespace DietPlanner.DataAccess
                     Protein = 0.3,
                     Carbs = 82,
                     Fat = 0,
-                    Allergen = Allergen.None.ToString()
+                    Allergen = Allergen.None
                 },
                 new Food
                 {
@@ -286,7 +286,7 @@ namespace DietPlanner.DataAccess
                     Protein = 25,
                     Carbs = 20,
                     Fat = 50,
-                    Allergen = Allergen.Nuts.ToString()
+                    Allergen = Allergen.Nuts
                 },
                 new Food
                 {
@@ -296,7 +296,7 @@ namespace DietPlanner.DataAccess
                     Protein = 3.4,
                     Carbs = 5,
                     Fat = 1.5,
-                    Allergen = Allergen.Dairy.ToString()
+                    Allergen = Allergen.Dairy
                 },
                 new Food
                 {
@@ -306,7 +306,7 @@ namespace DietPlanner.DataAccess
                     Protein = 0.7,
                     Carbs = 14,
                     Fat = 0.3,
-                    Allergen = Allergen.None.ToString()
+                    Allergen = Allergen.None
                 }
             );
         }

@@ -26,6 +26,9 @@ namespace DietPlanner.DataAccess
         {
             modelBuilder.Entity<MealContent>()
                 .HasKey(mf => new { mf.MealId, mf.FoodId });
+            modelBuilder.Entity<Food>()
+                .Property(f => f.Allergen)
+                .HasConversion<string>();
             FoodSeeder.Seed(modelBuilder.Entity<Food>());
             MealSeeder.Seed(modelBuilder.Entity<Meal>());
             MealContentSeeder.Seed(modelBuilder.Entity<MealContent>());
