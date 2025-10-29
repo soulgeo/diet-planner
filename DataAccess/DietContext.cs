@@ -1,5 +1,7 @@
-﻿using DietPlanner.Models;
+﻿using System;
+using DietPlanner.Models;
 using Microsoft.EntityFrameworkCore;
+using System.IO;
 
 namespace DietPlanner.DataAccess
 {
@@ -9,7 +11,11 @@ namespace DietPlanner.DataAccess
         public DbSet<Meal> Meals { get; set; } = null!;
         public DbSet<MealContent> MealContents { get; set; } = null!;
 
-        private string path = @"C:\Users\User\Documents\sqlite\DietPlanner.db";
+        private string path = Path.Combine(
+            Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.FullName,
+            "DataAccess", "DietPlanner.db"
+            );
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

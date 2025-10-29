@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DietPlanner.Migrations
 {
     [DbContext(typeof(DietContext))]
-    [Migration("20251025171101_initial")]
-    partial class initial
+    [Migration("20251029212545_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,7 +26,7 @@ namespace DietPlanner.Migrations
                         .HasColumnType("INTEGER")
                         .HasColumnName("food_id");
 
-                    b.Property<string>("Allergens")
+                    b.Property<string>("Allergen")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -38,11 +38,6 @@ namespace DietPlanner.Migrations
 
                     b.Property<double>("Fat")
                         .HasColumnType("REAL");
-
-                    b.Property<string>("FoodCategory")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasColumnName("food_category");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -59,330 +54,300 @@ namespace DietPlanner.Migrations
                         new
                         {
                             FoodId = 1,
-                            Allergens = "Κανένα",
+                            Allergen = "None",
                             Calories = 52.0,
                             Carbs = 14.0,
                             Fat = 0.20000000000000001,
-                            FoodCategory = "Φρούτο",
                             Name = "Μήλο",
                             Protein = 0.29999999999999999
                         },
                         new
                         {
                             FoodId = 2,
-                            Allergens = "Κανένα",
+                            Allergen = "None",
                             Calories = 89.0,
                             Carbs = 23.0,
                             Fat = 0.29999999999999999,
-                            FoodCategory = "Φρούτο",
                             Name = "Μπανάνα",
                             Protein = 1.1000000000000001
                         },
                         new
                         {
                             FoodId = 3,
-                            Allergens = "Κανένα",
+                            Allergen = "None",
                             Calories = 165.0,
                             Carbs = 0.0,
                             Fat = 3.6000000000000001,
-                            FoodCategory = "Πρωτεΐνη",
                             Name = "Στήθος Κοτόπουλο",
                             Protein = 31.0
                         },
                         new
                         {
                             FoodId = 4,
-                            Allergens = "Ψάρι",
+                            Allergen = "Fish",
                             Calories = 208.0,
                             Carbs = 0.0,
                             Fat = 13.0,
-                            FoodCategory = "Πρωτεΐνη",
                             Name = "Σολομός",
                             Protein = 20.0
                         },
                         new
                         {
                             FoodId = 5,
-                            Allergens = "Κανένα",
+                            Allergen = "None",
                             Calories = 55.0,
                             Carbs = 11.0,
                             Fat = 0.59999999999999998,
-                            FoodCategory = "Λαχανικό",
                             Name = "Μπρόκολο",
                             Protein = 3.7000000000000002
                         },
                         new
                         {
                             FoodId = 6,
-                            Allergens = "Κανένα",
+                            Allergen = "None",
                             Calories = 111.0,
                             Carbs = 23.0,
                             Fat = 0.90000000000000002,
-                            FoodCategory = "Υδατάνθρακας",
                             Name = "Ρύζι καστανό",
                             Protein = 2.6000000000000001
                         },
                         new
                         {
                             FoodId = 7,
-                            Allergens = "Ξηροί καρποί",
+                            Allergen = "Nuts",
                             Calories = 579.0,
                             Carbs = 22.0,
                             Fat = 49.0,
-                            FoodCategory = "Ξηροί Καρποί",
                             Name = "Αμύγδαλα",
                             Protein = 21.0
                         },
                         new
                         {
                             FoodId = 8,
-                            Allergens = "Γαλακτοκομικά",
+                            Allergen = "Dairy",
                             Calories = 73.0,
                             Carbs = 3.6000000000000001,
                             Fat = 2.0,
-                            FoodCategory = "Γαλακτοκομικό",
                             Name = "Γιαούρτι Στραγγιστό 2%",
                             Protein = 10.0
                         },
                         new
                         {
                             FoodId = 9,
-                            Allergens = "Αυγό",
+                            Allergen = "Egg",
                             Calories = 155.0,
                             Carbs = 1.1000000000000001,
                             Fat = 11.0,
-                            FoodCategory = "Πρωτεΐνη",
                             Name = "Αυγό",
                             Protein = 13.0
                         },
                         new
                         {
                             FoodId = 10,
-                            Allergens = "Κανένα",
+                            Allergen = "None",
                             Calories = 23.0,
                             Carbs = 3.6000000000000001,
                             Fat = 0.40000000000000002,
-                            FoodCategory = "Λαχανικό",
                             Name = "Σπανάκι",
                             Protein = 2.8999999999999999
                         },
                         new
                         {
                             FoodId = 11,
-                            Allergens = "Κανένα",
+                            Allergen = "None",
                             Calories = 86.0,
                             Carbs = 20.0,
                             Fat = 0.10000000000000001,
-                            FoodCategory = "Υδατάνθρακας",
                             Name = "Γλυκοπατάτα",
                             Protein = 1.6000000000000001
                         },
                         new
                         {
                             FoodId = 12,
-                            Allergens = "Κανένα",
+                            Allergen = "None",
                             Calories = 884.0,
                             Carbs = 0.0,
                             Fat = 100.0,
-                            FoodCategory = "Λιπαρά",
                             Name = "Ελαιόλαδο",
                             Protein = 0.0
                         },
                         new
                         {
                             FoodId = 13,
-                            Allergens = "Γλουτένη",
+                            Allergen = "Gluten",
                             Calories = 389.0,
                             Carbs = 66.299999999999997,
                             Fat = 6.9000000000000004,
-                            FoodCategory = "Υδατάνθρακας",
                             Name = "Βρώμη",
                             Protein = 16.899999999999999
                         },
                         new
                         {
                             FoodId = 14,
-                            Allergens = "Κανένα",
+                            Allergen = "None",
                             Calories = 116.0,
                             Carbs = 20.0,
                             Fat = 0.40000000000000002,
-                            FoodCategory = "Όσπριο",
                             Name = "Φακές",
                             Protein = 9.0
                         },
                         new
                         {
                             FoodId = 15,
-                            Allergens = "Ψάρι",
+                            Allergen = "Fish",
                             Calories = 132.0,
                             Carbs = 0.0,
                             Fat = 1.3,
-                            FoodCategory = "Πρωτεΐνη",
                             Name = "Τόνος σε νερό",
                             Protein = 28.0
                         },
                         new
                         {
                             FoodId = 16,
-                            Allergens = "Κανένα",
+                            Allergen = "None",
                             Calories = 15.0,
                             Carbs = 3.6000000000000001,
                             Fat = 0.10000000000000001,
-                            FoodCategory = "Λαχανικό",
                             Name = "Αγγούρι",
                             Protein = 0.69999999999999996
                         },
                         new
                         {
                             FoodId = 17,
-                            Allergens = "Κανένα",
+                            Allergen = "None",
                             Calories = 18.0,
                             Carbs = 3.8999999999999999,
                             Fat = 0.20000000000000001,
-                            FoodCategory = "Λαχανικό",
                             Name = "Ντομάτα",
                             Protein = 0.90000000000000002
                         },
                         new
                         {
                             FoodId = 18,
-                            Allergens = "Κανένα",
+                            Allergen = "None",
                             Calories = 217.0,
                             Carbs = 0.0,
                             Fat = 15.0,
-                            FoodCategory = "Πρωτεΐνη",
                             Name = "Μοσχαρίσιος Κιμάς (90/10)",
                             Protein = 19.0
                         },
                         new
                         {
                             FoodId = 19,
-                            Allergens = "Κανένα",
+                            Allergen = "None",
                             Calories = 120.0,
                             Carbs = 21.0,
                             Fat = 1.8999999999999999,
-                            FoodCategory = "Υδατάνθρακας",
                             Name = "Κινόα",
                             Protein = 4.4000000000000004
                         },
                         new
                         {
                             FoodId = 20,
-                            Allergens = "Κανένα",
+                            Allergen = "None",
                             Calories = 32.0,
                             Carbs = 7.7000000000000002,
                             Fat = 0.29999999999999999,
-                            FoodCategory = "Φρούτο",
                             Name = "Φράουλες",
                             Protein = 0.69999999999999996
                         },
                         new
                         {
                             FoodId = 21,
-                            Allergens = "Κανένα",
+                            Allergen = "None",
                             Calories = 160.0,
                             Carbs = 9.0,
                             Fat = 15.0,
-                            FoodCategory = "Λιπαρά",
                             Name = "Αβοκάντο",
                             Protein = 2.0
                         },
                         new
                         {
                             FoodId = 22,
-                            Allergens = "Γαλακτοκομικά",
+                            Allergen = "Dairy",
                             Calories = 98.0,
                             Carbs = 3.3999999999999999,
                             Fat = 4.2999999999999998,
-                            FoodCategory = "Γαλακτοκομικό",
                             Name = "Τυρί Cottage",
                             Protein = 11.0
                         },
                         new
                         {
                             FoodId = 23,
-                            Allergens = "Γλουτένη",
+                            Allergen = "Gluten",
                             Calories = 247.0,
                             Carbs = 41.0,
                             Fat = 3.3999999999999999,
-                            FoodCategory = "Υδατάνθρακας",
                             Name = "Ψωμί ολικής άλεσης",
                             Protein = 13.0
                         },
                         new
                         {
                             FoodId = 24,
-                            Allergens = "Κανένα",
+                            Allergen = "None",
                             Calories = 135.0,
                             Carbs = 0.0,
                             Fat = 1.0,
-                            FoodCategory = "Πρωτεΐνη",
                             Name = "Γαλοπούλα βραστή",
                             Protein = 29.0
                         },
                         new
                         {
                             FoodId = 25,
-                            Allergens = "Κανένα",
+                            Allergen = "None",
                             Calories = 164.0,
                             Carbs = 27.0,
                             Fat = 2.6000000000000001,
-                            FoodCategory = "Όσπριο",
                             Name = "Ρεβύθια",
                             Protein = 8.9000000000000004
                         },
                         new
                         {
                             FoodId = 26,
-                            Allergens = "Κανένα",
+                            Allergen = "None",
                             Calories = 31.0,
                             Carbs = 6.0,
                             Fat = 0.29999999999999999,
-                            FoodCategory = "Λαχανικό",
                             Name = "Πιπεριά Κόκκινη",
                             Protein = 1.0
                         },
                         new
                         {
                             FoodId = 27,
-                            Allergens = "Κανένα",
+                            Allergen = "None",
                             Calories = 304.0,
                             Carbs = 82.0,
                             Fat = 0.0,
-                            FoodCategory = "Γλυκαντικό",
                             Name = "Μέλι",
                             Protein = 0.29999999999999999
                         },
                         new
                         {
                             FoodId = 28,
-                            Allergens = "Φιστίκια",
+                            Allergen = "Nuts",
                             Calories = 588.0,
                             Carbs = 20.0,
                             Fat = 50.0,
-                            FoodCategory = "Λιπαρά",
                             Name = "Φυστικοβούτυρο",
                             Protein = 25.0
                         },
                         new
                         {
                             FoodId = 29,
-                            Allergens = "Γαλακτοκομικά",
+                            Allergen = "Dairy",
                             Calories = 47.0,
                             Carbs = 5.0,
                             Fat = 1.5,
-                            FoodCategory = "Γαλακτοκομικό",
                             Name = "Γάλα 1.5%",
                             Protein = 3.3999999999999999
                         },
                         new
                         {
                             FoodId = 30,
-                            Allergens = "Κανένα",
+                            Allergen = "None",
                             Calories = 57.0,
                             Carbs = 14.0,
                             Fat = 0.29999999999999999,
-                            FoodCategory = "Φρούτο",
                             Name = "Μύρτιλα (Blueberries)",
                             Protein = 0.69999999999999996
                         });
@@ -395,9 +360,8 @@ namespace DietPlanner.Migrations
                         .HasColumnType("INTEGER")
                         .HasColumnName("meal_id");
 
-                    b.Property<string>("MealType")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
+                    b.Property<int>("MealType")
+                        .HasColumnType("INTEGER")
                         .HasColumnName("meal_type");
 
                     b.Property<string>("Name")
@@ -412,78 +376,78 @@ namespace DietPlanner.Migrations
                         new
                         {
                             MealId = 1,
-                            MealType = "Πρωινό",
+                            MealType = 0,
                             Name = "Πρωινό με Βρώμη & Φρούτα"
                         },
                         new
                         {
                             MealId = 2,
-                            MealType = "Μεσημεριανό",
+                            MealType = 2,
                             Name = "Μεσημεριανό με Κοτόπουλο & Κινόα"
                         },
                         new
                         {
                             MealId = 3,
-                            MealType = "Βραδινό",
+                            MealType = 4,
                             Name = "Βραδινό με Σολομό & Γλυκοπατάτα"
                         },
                         new
                         {
                             MealId = 4,
-                            MealType = "Σνακ",
+                            MealType = 3,
                             Name = "Γιαούρτι με Μέλι & Ξηρούς Καρπούς"
                         },
                         new
                         {
                             MealId = 5,
-                            MealType = "Πρωινό",
+                            MealType = 0,
                             Name = "Ομελέτα με Σπανάκι"
                         },
                         new
                         {
                             MealId = 6,
-                            MealType = "Μεσημεριανό",
+                            MealType = 2,
                             Name = "Σαλάτα με Τόνο"
                         },
                         new
                         {
                             MealId = 7,
-                            MealType = "Σνακ",
+                            MealType = 1,
                             Name = "Τοστ με Γαλοπούλα & Αβοκάντο"
                         },
                         new
                         {
                             MealId = 8,
-                            MealType = "Μεσημεριανό",
+                            MealType = 2,
                             Name = "Κιμάς με Ρύζι"
                         },
                         new
                         {
                             MealId = 9,
-                            MealType = "Πρωινό",
+                            MealType = 0,
                             Name = "Smoothie Πρωτεΐνης"
                         },
                         new
                         {
                             MealId = 10,
-                            MealType = "Βραδινό",
+                            MealType = 4,
                             Name = "Σαλάτα με Ρεβύθια"
                         },
                         new
                         {
                             MealId = 11,
-                            MealType = "Σνακ",
+                            MealType = 3,
                             Name = "Cottage με Φράουλες"
                         },
                         new
                         {
                             MealId = 12,
-                            MealType = "Μεσημεριανό",
+                            MealType = 2,
                             Name = "Φακές Σούπα"
                         });
                 });
 
-            modelBuilder.Entity("DietPlanner.Models.MealFood", b =>
+            modelBuilder.Entity("DietPlanner.Models.MealContent", b =>
                 {
                     b.Property<int>("MealId")
                         .HasColumnType("INTEGER")
@@ -752,7 +716,7 @@ namespace DietPlanner.Migrations
                         });
                 });
 
-            modelBuilder.Entity("DietPlanner.Models.MealFood", b =>
+            modelBuilder.Entity("DietPlanner.Models.MealContent", b =>
                 {
                     b.HasOne("DietPlanner.Models.Food", "Food")
                         .WithMany()
