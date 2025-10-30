@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DietPlanner.Models;
 
 public class Patient
 {

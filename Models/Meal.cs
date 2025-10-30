@@ -1,20 +1,20 @@
-using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-public class Meal
+namespace DietPlanner.Models
 {
-    public int MealID { get; set; }
-    public string Name { get; set; } = "name";
-    public MealType MealType { get; set; }
-    public int CaloriesKcal { get; set; }
-    public double ProteinG { get; set; }
-    public double CarbG { get; set; }
-    public double FatG { get; set; }
-    public List<Food> Contents { get; set; }
-
-    public Meal(MealType mealType)
+    [Table("Meals")]
+    public class Meal
     {
-        Contents = new List<Food>();
-        this.MealType = mealType;
-    }
-};
+        [Key]
+        [Column("meal_id")]
+        public int MealId { get; set; }
 
+        [Required]
+        public string Name { get; set; } = null!;
+
+        [Required]
+        [Column("meal_type")]
+        public MealType MealType { get; set; }
+    }
+}
