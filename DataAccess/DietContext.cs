@@ -11,11 +11,7 @@ namespace DietPlanner.DataAccess
         public DbSet<Meal> Meals { get; set; } = null!;
         public DbSet<MealContent> MealContents { get; set; } = null!;
 
-        private string path = Path.Combine(
-            Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory).Parent.Parent.Parent.FullName,
-            "DataAccess", "DietPlanner.db"
-            );
-
+        private readonly string path = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "DataAccess", "DietPlanner.db"));
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
