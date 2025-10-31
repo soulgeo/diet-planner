@@ -1,6 +1,6 @@
 # Build results
-/bin/
-/obj/
+**/bin/
+**/obj/
 
 # Visual Studio & Rider
 .vs/
@@ -31,3 +31,11 @@ Thumbs.db
 /packages/
 /*.nupkg
 
+# Log files
+*.log
+msbuild.binlog
+
+# Databases
+*.db
+*.db-shm
+*.db-wal
