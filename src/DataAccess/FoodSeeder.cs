@@ -307,6 +307,206 @@ namespace DietPlanner.DataAccess
                     Carbs = 14,
                     Fat = 0.3,
                     Allergen = Allergen.None
+                },
+                new Food
+                {
+                    FoodId = 31,
+                    Name = "Greek Yogurt 0%",
+                    Calories = 59,
+                    Protein = 10,
+                    Carbs = 3.6,
+                    Fat = 0.4,
+                    Allergen = Allergen.Dairy
+                },
+                new Food
+                {
+                    FoodId = 32,
+                    Name = "Granola",
+                    Calories = 450,
+                    Protein = 8,
+                    Carbs = 64,
+                    Fat = 15,
+                    Allergen = Allergen.Gluten
+                },
+                new Food
+                {
+                    FoodId = 33,
+                    Name = "Black Beans (cooked)",
+                    Calories = 110,
+                    Protein = 7.6,
+                    Carbs = 20,
+                    Fat = 0.5,
+                    Allergen = Allergen.None
+                },
+                new Food
+                {
+                    FoodId = 34,
+                    Name = "Tofu",
+                    Calories = 76,
+                    Protein = 8,
+                    Carbs = 1.9,
+                    Fat = 4.8,
+                    Allergen = Allergen.None
+                },
+                new Food
+                {
+                    FoodId = 35,
+                    Name = "Edamame",
+                    Calories = 121,
+                    Protein = 11,
+                    Carbs = 8.9,
+                    Fat = 5.2,
+                    Allergen = Allergen.None
+                },
+                new Food
+                {
+                    FoodId = 36,
+                    Name = "Shrimp",
+                    Calories = 99,
+                    Protein = 24,
+                    Carbs = 0.2,
+                    Fat = 0.3,
+                    Allergen = Allergen.Fish
+                },
+                new Food
+                {
+                    FoodId = 37,
+                    Name = "Pork Loin",
+                    Calories = 242,
+                    Protein = 27,
+                    Carbs = 0,
+                    Fat = 14,
+                    Allergen = Allergen.None
+                },
+                new Food
+                {
+                    FoodId = 38,
+                    Name = "Whole Wheat Pasta",
+                    Calories = 124,
+                    Protein = 5,
+                    Carbs = 25,
+                    Fat = 0.7,
+                    Allergen = Allergen.Gluten
+                },
+                new Food
+                {
+                    FoodId = 39,
+                    Name = "Hummus",
+                    Calories = 166,
+                    Protein = 8,
+                    Carbs = 14,
+                    Fat = 10,
+                    Allergen = Allergen.None
+                },
+                new Food
+                {
+                    FoodId = 40,
+                    Name = "Walnuts",
+                    Calories = 654,
+                    Protein = 15,
+                    Carbs = 14,
+                    Fat = 65,
+                    Allergen = Allergen.Nuts
+                },
+                new Food
+                {
+                    FoodId = 41,
+                    Name = "Pumpkin Seeds",
+                    Calories = 559,
+                    Protein = 30,
+                    Carbs = 10,
+                    Fat = 49,
+                    Allergen = Allergen.Nuts
+                },
+                new Food
+                {
+                    FoodId = 42,
+                    Name = "Pear",
+                    Calories = 57,
+                    Protein = 0.4,
+                    Carbs = 15,
+                    Fat = 0.1,
+                    Allergen = Allergen.None
+                },
+                new Food
+                {
+                    FoodId = 43,
+                    Name = "Kefir 1%",
+                    Calories = 41,
+                    Protein = 3.3,
+                    Carbs = 4,
+                    Fat = 1,
+                    Allergen = Allergen.Dairy
+                },
+                new Food
+                {
+                    FoodId = 44,
+                    Name = "Tempeh",
+                    Calories = 193,
+                    Protein = 19,
+                    Carbs = 9,
+                    Fat = 11,
+                    Allergen = Allergen.None
+                },
+                new Food
+                {
+                    FoodId = 45,
+                    Name = "Sardines (in oil)",
+                    Calories = 208,
+                    Protein = 24,
+                    Carbs = 0,
+                    Fat = 11,
+                    Allergen = Allergen.Fish
+                },
+                new Food
+                {
+                    FoodId = 46,
+                    Name = "Oat Milk",
+                    Calories = 45,
+                    Protein = 1,
+                    Carbs = 6,
+                    Fat = 1.5,
+                    Allergen = Allergen.Gluten
+                },
+                new Food
+                {
+                    FoodId = 47,
+                    Name = "Cauliflower",
+                    Calories = 25,
+                    Protein = 1.9,
+                    Carbs = 5,
+                    Fat = 0.3,
+                    Allergen = Allergen.None
+                },
+                new Food
+                {
+                    FoodId = 48,
+                    Name = "Sweet Corn",
+                    Calories = 86,
+                    Protein = 3.2,
+                    Carbs = 19,
+                    Fat = 1.2,
+                    Allergen = Allergen.None
+                },
+                new Food
+                {
+                    FoodId = 49,
+                    Name = "Dark Chocolate 70%",
+                    Calories = 600,
+                    Protein = 7,
+                    Carbs = 46,
+                    Fat = 43,
+                    Allergen = Allergen.None
+                },
+                new Food
+                {
+                    FoodId = 50,
+                    Name = "Chia Seeds",
+                    Calories = 486,
+                    Protein = 17,
+                    Carbs = 42,
+                    Fat = 31,
+                    Allergen = Allergen.None
                 }
             );
         }

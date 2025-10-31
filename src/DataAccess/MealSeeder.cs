@@ -19,7 +19,27 @@ namespace DietPlanner.DataAccess
                 new Meal { MealId = 9, Name = "Protein Smoothie", MealType = MealType.Breakfast },
                 new Meal { MealId = 10, Name = "Chickpea Salad", MealType = MealType.Dinner },
                 new Meal { MealId = 11, Name = "Cottage Cheese with Strawberries", MealType = MealType.AfternoonSnack },
-                new Meal { MealId = 12, Name = "Lentil Soup", MealType = MealType.Lunch }
+                new Meal { MealId = 12, Name = "Lentil Soup", MealType = MealType.Lunch },
+                new Meal { MealId = 13, Name = "Greek Yogurt Parfait", MealType = MealType.Breakfast },
+                new Meal { MealId = 14, Name = "Black Bean Burrito Bowl", MealType = MealType.Lunch },
+                new Meal { MealId = 15, Name = "Tofu Stir-Fry", MealType = MealType.Dinner },
+                new Meal { MealId = 16, Name = "Edamame Snack", MealType = MealType.MorningSnack },
+                new Meal { MealId = 17, Name = "Shrimp & Veggie Skewers", MealType = MealType.Dinner },
+                new Meal { MealId = 18, Name = "Pork Loin & Sweet Potato", MealType = MealType.Dinner },
+                new Meal { MealId = 19, Name = "Whole Wheat Pasta Primavera", MealType = MealType.Lunch },
+                new Meal { MealId = 20, Name = "Hummus & Veggies", MealType = MealType.AfternoonSnack },
+                new Meal { MealId = 21, Name = "Walnut & Spinach Salad", MealType = MealType.Lunch },
+                new Meal { MealId = 22, Name = "Pumpkin Seed Oatmeal", MealType = MealType.Breakfast },
+                new Meal { MealId = 23, Name = "Pear & Cottage Cheese", MealType = MealType.MorningSnack },
+                new Meal { MealId = 24, Name = "Kefir Berry Smoothie", MealType = MealType.Breakfast },
+                new Meal { MealId = 25, Name = "Tempeh Buddha Bowl", MealType = MealType.Lunch },
+                new Meal { MealId = 26, Name = "Sardine Toast", MealType = MealType.MorningSnack },
+                new Meal { MealId = 27, Name = "Oat Milk Protein Shake", MealType = MealType.Breakfast },
+                new Meal { MealId = 28, Name = "Cauliflower Fried Rice (Vegan)", MealType = MealType.Lunch },
+                new Meal { MealId = 29, Name = "Corn & Black Bean Salad", MealType = MealType.Dinner },
+                new Meal { MealId = 30, Name = "Dark Chocolate & Almonds", MealType = MealType.AfternoonSnack },
+                new Meal { MealId = 31, Name = "Chia Pudding with Berries", MealType = MealType.Breakfast },
+                new Meal { MealId = 32, Name = "Grilled Beef & Veggies", MealType = MealType.Dinner }
             );
         }
     }
