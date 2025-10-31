@@ -1,8 +1,11 @@
-public enum MealType
+namespace DietPlanner.Models
 {
-    Breakfast,
-    MorningSnack,
-    Lunch,
-    AfternoonSnack,
-    Dinner
+    public enum MealType
+    {
+        Breakfast,
+        MorningSnack,
+        Lunch,
+        AfternoonSnack,
+        Dinner
+    }
 }

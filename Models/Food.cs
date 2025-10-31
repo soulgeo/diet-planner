@@ -13,12 +13,12 @@ namespace DietPlanner.Models
         [Required]
         public string Name { get; set; } = null!;
 
-       // [Required]
-       // [Column("food_category")]
-      //  public string FoodCategory { get; set; } = null!;
+        // [Required]
+        // [Column("food_category")]
+        //  public string FoodCategory { get; set; } = null!;
 
         [Required]
-        public double Calories { get; set; }
+        public int Calories { get; set; }
 
         [Required]
         public double Protein { get; set; }
@@ -29,6 +29,6 @@ namespace DietPlanner.Models
         [Required]
         public double Fat { get; set; }
 
-        public Allergen Allergen { get; set; } 
+        public Allergen Allergen { get; set; }
     }
 }
