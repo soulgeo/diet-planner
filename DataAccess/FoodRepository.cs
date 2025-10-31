@@ -13,7 +13,7 @@ namespace DietPlanner.DataAccess
             {
                 var foods = db.MealContents
                               .Where(mc => mealIds.Contains(mc.MealId))
-                              .Select(mc => mc.Food)   // this pulls the Food entities
+                              .Select(mc => mc.Food)
                               .AsNoTracking()
                               .ToList();
                 return foods;

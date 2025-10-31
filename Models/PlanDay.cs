@@ -4,8 +4,6 @@ using System.Linq;
 
 namespace DietPlanner.Models
 {
-
-
     public class PlanDay
     {
         public DayOfWeek DayOfWeek { get; set; }

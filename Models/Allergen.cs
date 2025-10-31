@@ -1,10 +1,13 @@
-public enum Allergen
+namespace DietPlanner.Models
 {
-    None,
-    Fish,
-    Nuts,
-    Dairy,
-    Egg,
-    Gluten
-}
+    public enum Allergen
+    {
+        None,
+        Fish,
+        Nuts,
+        Dairy,
+        Egg,
+        Gluten
+    }
 
+}

@@ -1,33 +1,36 @@
 using System;
 using System.Collections.Generic;
 
-public class PlanProperties
+namespace DietPlanner.Models
 {
-    public Patient patient { get; set; }
-    public WeightGoal WeightGoal { get; set; }
-
-    // Target macros
-    public int ProteinPercent { get; }
-    public int FatPercent { get; }
-    public int CarbPercent { get; }
-
-    public int DailyCalorieTarget => (int)Math.Round(((float)WeightGoal / 100) * patient.TDEE);
-
-    public double TargetProteinG => ProteinPercent * 0.01 * DailyCalorieTarget / 4;
-    public double TargetFatG => FatPercent * 0.01 * DailyCalorieTarget / 9;
-    public double TargetCarbG => CarbPercent * 0.01 * DailyCalorieTarget / 4;
-
-    public HashSet<MealType> MealTypes { get; set; }
-
-    public PlanProperties(Patient patient, int proteinPercent, int fatPercent, int carbPercent)
+    public class PlanProperties
     {
-        if (proteinPercent + fatPercent + carbPercent - 100 != 0)
-            throw new ArgumentException("Macro percentages must sum to 100");
+        public Patient patient { get; set; }
+        public WeightGoal WeightGoal { get; set; }
 
-        this.patient = patient;
-        MealTypes = new HashSet<MealType>();
-        ProteinPercent = proteinPercent;
-        FatPercent = fatPercent;
-        CarbPercent = carbPercent;
+        // Target macros
+        public int ProteinPercent { get; }
+        public int FatPercent { get; }
+        public int CarbPercent { get; }
+
+        public int DailyCalorieTarget => (int)Math.Round(((float)WeightGoal / 100) * patient.TDEE);
+
+        public double TargetProteinG => ProteinPercent * 0.01 * DailyCalorieTarget / 4;
+        public double TargetFatG => FatPercent * 0.01 * DailyCalorieTarget / 9;
+        public double TargetCarbG => CarbPercent * 0.01 * DailyCalorieTarget / 4;
+
+        public HashSet<MealType> MealTypes { get; set; }
+
+        public PlanProperties(Patient patient, int proteinPercent, int fatPercent, int carbPercent)
+        {
+            if (proteinPercent + fatPercent + carbPercent - 100 != 0)
+                throw new ArgumentException("Macro percentages must sum to 100");
+
+            this.patient = patient;
+            MealTypes = new HashSet<MealType>();
+            ProteinPercent = proteinPercent;
+            FatPercent = fatPercent;
+            CarbPercent = carbPercent;
+        }
     }
 }

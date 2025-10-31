@@ -1,5 +1,8 @@
-public enum Gender : int
+namespace DietPlanner.Models
 {
-    Male,
-    Female
+    public enum Gender : int
+    {
+        Male,
+        Female
+    }
 }

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 
 namespace DietPlanner.Models
 {
-
     public class Plan
     {
         public PlanProperties PlanProperties { get; }
