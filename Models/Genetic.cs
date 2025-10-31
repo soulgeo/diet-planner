@@ -25,8 +25,8 @@ namespace DietPlanner.Models
         {
             int calories = 0;
             double protein = 0, fat = 0, carb = 0;
-            var mealIds = plan.Meals.Select(m => m.MealId).ToList();
 
+            var mealIds = plan.Meals.Select(m => m.MealId).ToList();
             List<Food> foods = FoodRepository.GetFoodsForMeals(mealIds);
             foreach (var f in foods)
             {
@@ -35,6 +35,7 @@ namespace DietPlanner.Models
                 fat += f.Fat;
                 carb += f.Carbs;
             }
+
             int calWeight = Math.Abs(calories - plan.PlanProperties.DailyCalorieTarget);
             double protWeight = Math.Abs(protein - plan.PlanProperties.TargetProteinG) * 4;
             double fatWeight = Math.Abs(fat - plan.PlanProperties.TargetFatG) * 9;
@@ -65,7 +66,7 @@ namespace DietPlanner.Models
             do
             {
                 second = weightedList[rand.Next(weightedList.Count)];
-            } while (second == first && population.Count > 1);
+            } while (second == first);
 
             return new List<Plan> { first, second };
         }
@@ -97,21 +98,23 @@ namespace DietPlanner.Models
 
         public static Plan Mutation(Plan plan, List<Meal> validMeals, int num = 1, float probability = 0.5f)
         {
-            // TODO: Add use for probability arguement.
             var rand = new Random();
             var mealsByType = validMeals.GroupBy(m => m.MealType)
                                   .ToDictionary(g => g.Key, g => g.ToList());
-
-            int index = rand.Next(plan.Meals.Count);
 
             Plan mutatedPlan = plan;
             int i = 0;
             while (i < num)
             {
+                if (rand.NextDouble() > probability)
+                {
+                    continue;
+                }
+                int index = rand.Next(plan.Meals.Count);
                 if (mealsByType.TryGetValue(mutatedPlan.Meals[index].MealType, out var matchingMeals)
                         && matchingMeals.Any())
                 {
-                    var randomMeal = matchingMeals[rand.Next(matchingMeals.Count)];
+                    Meal randomMeal = matchingMeals[rand.Next(matchingMeals.Count)];
                     mutatedPlan.Meals[index] = randomMeal;
                 }
                 i++;
