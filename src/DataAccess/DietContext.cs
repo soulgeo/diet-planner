@@ -7,6 +7,11 @@ namespace DietPlanner.DataAccess
 {
     public class DietContext : DbContext
     {
+        public DietContext()
+        {
+            this.Database.EnsureCreated();
+        }
+
         public DbSet<Food> Foods { get; set; } = null!;
         public DbSet<Meal> Meals { get; set; } = null!;
         public DbSet<MealContent> MealContents { get; set; } = null!;
@@ -15,7 +20,11 @@ namespace DietPlanner.DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+#if DEBUG
+            optionsBuilder.UseInMemoryDatabase(databaseName: "DietPlannerTest");
+#else
             optionsBuilder.UseSqlite($"Data Source={path}");
+#endif
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

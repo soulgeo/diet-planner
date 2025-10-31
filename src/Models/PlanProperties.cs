@@ -27,7 +27,7 @@ namespace DietPlanner.Models
                 throw new ArgumentException("Macro percentages must sum to 100");
 
             this.patient = patient;
-            MealTypes = new HashSet<MealType>();
+            MealTypes = new HashSet<MealType> { MealType.Breakfast, MealType.Lunch, MealType.Dinner };
             ProteinPercent = proteinPercent;
             FatPercent = fatPercent;
             CarbPercent = carbPercent;
