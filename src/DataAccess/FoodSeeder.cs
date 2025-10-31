@@ -1,4 +1,4 @@
-﻿using DietPlanner.Models;
+using DietPlanner.Models;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DietPlanner.DataAccess
@@ -11,7 +11,7 @@ namespace DietPlanner.DataAccess
                 new Food
                 {
                     FoodId = 1,
-                    Name = "Μήλο",
+                    Name = "Apple",
                     Calories = 52,
                     Protein = 0.3,
                     Carbs = 14,
@@ -21,7 +21,7 @@ namespace DietPlanner.DataAccess
                 new Food
                 {
                     FoodId = 2,
-                    Name = "Μπανάνα",
+                    Name = "Banana",
                     Calories = 89,
                     Protein = 1.1,
                     Carbs = 23,
@@ -31,7 +31,7 @@ namespace DietPlanner.DataAccess
                 new Food
                 {
                     FoodId = 3,
-                    Name = "Στήθος Κοτόπουλο",
+                    Name = "Chicken Breast",
                     Calories = 165,
                     Protein = 31,
                     Carbs = 0,
@@ -41,7 +41,7 @@ namespace DietPlanner.DataAccess
                 new Food
                 {
                     FoodId = 4,
-                    Name = "Σολομός",
+                    Name = "Salmon",
                     Calories = 208,
                     Protein = 20,
                     Carbs = 0,
@@ -51,7 +51,7 @@ namespace DietPlanner.DataAccess
                 new Food
                 {
                     FoodId = 5,
-                    Name = "Μπρόκολο",
+                    Name = "Broccoli",
                     Calories = 55,
                     Protein = 3.7,
                     Carbs = 11,
@@ -61,7 +61,7 @@ namespace DietPlanner.DataAccess
                 new Food
                 {
                     FoodId = 6,
-                    Name = "Ρύζι καστανό",
+                    Name = "Brown Rice",
                     Calories = 111,
                     Protein = 2.6,
                     Carbs = 23,
@@ -71,7 +71,7 @@ namespace DietPlanner.DataAccess
                 new Food
                 {
                     FoodId = 7,
-                    Name = "Αμύγδαλα",
+                    Name = "Almonds",
                     Calories = 579,
                     Protein = 21,
                     Carbs = 22,
@@ -81,7 +81,7 @@ namespace DietPlanner.DataAccess
                 new Food
                 {
                     FoodId = 8,
-                    Name = "Γιαούρτι Στραγγιστό 2%",
+                    Name = "Strained Yogurt 2%",
                     Calories = 73,
                     Protein = 10,
                     Carbs = 3.6,
@@ -91,7 +91,7 @@ namespace DietPlanner.DataAccess
                 new Food
                 {
                     FoodId = 9,
-                    Name = "Αυγό",
+                    Name = "Egg",
                     Calories = 155,
                     Protein = 13,
                     Carbs = 1.1,
@@ -101,7 +101,7 @@ namespace DietPlanner.DataAccess
                 new Food
                 {
                     FoodId = 10,
-                    Name = "Σπανάκι",
+                    Name = "Spinach",
                     Calories = 23,
                     Protein = 2.9,
                     Carbs = 3.6,
@@ -111,7 +111,7 @@ namespace DietPlanner.DataAccess
                 new Food
                 {
                     FoodId = 11,
-                    Name = "Γλυκοπατάτα",
+                    Name = "Sweet Potato",
                     Calories = 86,
                     Protein = 1.6,
                     Carbs = 20,
@@ -121,7 +121,7 @@ namespace DietPlanner.DataAccess
                 new Food
                 {
                     FoodId = 12,
-                    Name = "Ελαιόλαδο",
+                    Name = "Olive Oil",
                     Calories = 884,
                     Protein = 0,
                     Carbs = 0,
@@ -131,7 +131,7 @@ namespace DietPlanner.DataAccess
                 new Food
                 {
                     FoodId = 13,
-                    Name = "Βρώμη",
+                    Name = "Oats",
                     Calories = 389,
                     Protein = 16.9,
                     Carbs = 66.3,
@@ -141,7 +141,7 @@ namespace DietPlanner.DataAccess
                 new Food
                 {
                     FoodId = 14,
-                    Name = "Φακές",
+                    Name = "Lentils",
                     Calories = 116,
                     Protein = 9,
                     Carbs = 20,
@@ -151,7 +151,7 @@ namespace DietPlanner.DataAccess
                 new Food
                 {
                     FoodId = 15,
-                    Name = "Τόνος σε νερό",
+                    Name = "Tuna in Water",
                     Calories = 132,
                     Protein = 28,
                     Carbs = 0,
@@ -161,7 +161,7 @@ namespace DietPlanner.DataAccess
                 new Food
                 {
                     FoodId = 16,
-                    Name = "Αγγούρι",
+                    Name = "Cucumber",
                     Calories = 15,
                     Protein = 0.7,
                     Carbs = 3.6,
@@ -171,7 +171,7 @@ namespace DietPlanner.DataAccess
                 new Food
                 {
                     FoodId = 17,
-                    Name = "Ντομάτα",
+                    Name = "Tomato",
                     Calories = 18,
                     Protein = 0.9,
                     Carbs = 3.9,
@@ -181,7 +181,7 @@ namespace DietPlanner.DataAccess
                 new Food
                 {
                     FoodId = 18,
-                    Name = "Μοσχαρίσιος Κιμάς (90/10)",
+                    Name = "Minced Beef (90/10)",
                     Calories = 217,
                     Protein = 19,
                     Carbs = 0,
@@ -191,7 +191,7 @@ namespace DietPlanner.DataAccess
                 new Food
                 {
                     FoodId = 19,
-                    Name = "Κινόα",
+                    Name = "Quinoa",
                     Calories = 120,
                     Protein = 4.4,
                     Carbs = 21,
@@ -201,7 +201,7 @@ namespace DietPlanner.DataAccess
                 new Food
                 {
                     FoodId = 20,
-                    Name = "Φράουλες",
+                    Name = "Strawberries",
                     Calories = 32,
                     Protein = 0.7,
                     Carbs = 7.7,
@@ -211,7 +211,7 @@ namespace DietPlanner.DataAccess
                 new Food
                 {
                     FoodId = 21,
-                    Name = "Αβοκάντο",
+                    Name = "Avocado",
                     Calories = 160,
                     Protein = 2,
                     Carbs = 9,
@@ -221,7 +221,7 @@ namespace DietPlanner.DataAccess
                 new Food
                 {
                     FoodId = 22,
-                    Name = "Τυρί Cottage",
+                    Name = "Cottage Cheese",
                     Calories = 98,
                     Protein = 11,
                     Carbs = 3.4,
@@ -231,7 +231,7 @@ namespace DietPlanner.DataAccess
                 new Food
                 {
                     FoodId = 23,
-                    Name = "Ψωμί ολικής άλεσης",
+                    Name = "Wholemeal Bread",
                     Calories = 247,
                     Protein = 13,
                     Carbs = 41,
@@ -241,7 +241,7 @@ namespace DietPlanner.DataAccess
                 new Food
                 {
                     FoodId = 24,
-                    Name = "Γαλοπούλα βραστή",
+                    Name = "Boiled Turkey",
                     Calories = 135,
                     Protein = 29,
                     Carbs = 0,
@@ -251,7 +251,7 @@ namespace DietPlanner.DataAccess
                 new Food
                 {
                     FoodId = 25,
-                    Name = "Ρεβύθια",
+                    Name = "Chickpeas",
                     Calories = 164,
                     Protein = 8.9,
                     Carbs = 27,
@@ -261,7 +261,7 @@ namespace DietPlanner.DataAccess
                 new Food
                 {
                     FoodId = 26,
-                    Name = "Πιπεριά Κόκκινη",
+                    Name = "Red Pepper",
                     Calories = 31,
                     Protein = 1,
                     Carbs = 6,
@@ -271,7 +271,7 @@ namespace DietPlanner.DataAccess
                 new Food
                 {
                     FoodId = 27,
-                    Name = "Μέλι",
+                    Name = "Honey",
                     Calories = 304,
                     Protein = 0.3,
                     Carbs = 82,
@@ -281,7 +281,7 @@ namespace DietPlanner.DataAccess
                 new Food
                 {
                     FoodId = 28,
-                    Name = "Φυστικοβούτυρο",
+                    Name = "Peanut Butter",
                     Calories = 588,
                     Protein = 25,
                     Carbs = 20,
@@ -291,7 +291,7 @@ namespace DietPlanner.DataAccess
                 new Food
                 {
                     FoodId = 29,
-                    Name = "Γάλα 1.5%",
+                    Name = "Milk 1.5%",
                     Calories = 47,
                     Protein = 3.4,
                     Carbs = 5,
@@ -301,7 +301,7 @@ namespace DietPlanner.DataAccess
                 new Food
                 {
                     FoodId = 30,
-                    Name = "Μύρτιλα (Blueberries)",
+                    Name = "Blueberries",
                     Calories = 57,
                     Protein = 0.7,
                     Carbs = 14,
