@@ -9,7 +9,7 @@ namespace DietPlanner.DataAccess
     {
         public DietContext()
         {
-            this.Database.EnsureCreated();
+
         }
 
         public DbSet<Food> Foods { get; set; } = null!;
