@@ -1,6 +1,8 @@
 ﻿using Avalonia;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System;
+using DietPlanner.DataAccess;
 
 namespace diet_planner;
 
@@ -12,12 +14,22 @@ sealed class Program
     [STAThread]
     public static void Main(string[] args)
     {
-        using (var ctx = new DietPlanner.DataAccess.DietContext())
+
+        var host = Host.CreateDefaultBuilder(args)
+            .ConfigureServices((context, services) =>
+            {
+                services.AddDbContext<DietContext>(); // OnConfiguring will pick up provider
+                                                      // or explicitly configure:
+                                                      // services.AddDbContext<DietContext>(opts => opts.UseSqlite($"Data Source={path}"));
+            })
+            .Build();
+
+        using (var scope = host.Services.CreateScope())
         {
-            bool canConnect = ctx.Database.CanConnect();
-            Console.WriteLine($"EF CanConnect: {canConnect}");
-            Console.WriteLine("Connection string: " + ctx.Database.GetDbConnection().ConnectionString);
+            var db = scope.ServiceProvider.GetRequiredService<DietContext>();
+            db.Database.EnsureCreated(); // creates DB + schema if not exists
         }
+
         BuildAvaloniaApp()
         .StartWithClassicDesktopLifetime(args);
     }
