@@ -20,11 +20,11 @@ namespace DietPlanner.DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-#if DEBUG
-            optionsBuilder.UseInMemoryDatabase(databaseName: "DietPlannerTest");
-#else
+            // #if DEBUG
+            // optionsBuilder.UseInMemoryDatabase(databaseName: "DietPlannerTest");
+            // #else
             optionsBuilder.UseSqlite($"Data Source={path}");
-#endif
+            // #endif
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
