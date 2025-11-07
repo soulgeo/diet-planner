@@ -7,9 +7,18 @@ namespace DietPlanner.DataAccess
 {
     public class DietContext : DbContext
     {
-        public DietContext()
-        {
+        private static readonly DbContextOptions<DietContext> _options = new DbContextOptionsBuilder<DietContext>()
+            .UseInMemoryDatabase(databaseName: "DietPlannerTest")
+            .Options;
 
+        public DietContext() : base(_options)
+        {
+            Database.EnsureCreated();
+        }
+
+        public DietContext(DbContextOptions<DietContext> options) : base(options)
+        {
+            Database.EnsureCreated();
         }
 
         public DbSet<Food> Foods { get; set; } = null!;
@@ -20,11 +29,14 @@ namespace DietPlanner.DataAccess
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // #if DEBUG
-            // optionsBuilder.UseInMemoryDatabase(databaseName: "DietPlannerTest");
-            // #else
-            optionsBuilder.UseSqlite($"Data Source={path}");
-            // #endif
+            if (!optionsBuilder.IsConfigured)
+            {
+#if DEBUG
+                optionsBuilder.UseInMemoryDatabase(databaseName: "DietPlannerTest");
+#else
+                optionsBuilder.UseSqlite($"Data Source={path}");
+#endif
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

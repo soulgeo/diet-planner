@@ -21,13 +21,13 @@ namespace DietPlanner.Models
 
         public HashSet<MealType> MealTypes { get; set; }
 
-        public PlanProperties(Patient patient, int proteinPercent, int fatPercent, int carbPercent)
+        public PlanProperties(Patient patient, int proteinPercent = 30, int fatPercent = 30, int carbPercent = 40)
         {
             if (proteinPercent + fatPercent + carbPercent - 100 != 0)
                 throw new ArgumentException("Macro percentages must sum to 100");
 
             this.patient = patient;
-            MealTypes = new HashSet<MealType> { MealType.Breakfast, MealType.Lunch, MealType.Dinner };
+            MealTypes = [MealType.Breakfast, MealType.Lunch, MealType.Dinner];
             ProteinPercent = proteinPercent;
             FatPercent = fatPercent;
             CarbPercent = carbPercent;

@@ -17,6 +17,7 @@ namespace DietPlanner.DataAccess
                     .Where(m => !m.MealContents.Any(mc => patient.Allergies.Contains(mc.Food.Allergen)))
                     .Where(m => !m.MealContents.Any(mc => patient.LeastFavorites.Select(f => f.Name).Contains(mc.Food.Name)))
                     .ToList();
+                // var meals = db.Meals.ToList();
 
                 return meals;
             }
