@@ -43,8 +43,7 @@ namespace DietPlanner.Models
             double fatWeight = Math.Abs(fat - plan.PlanProperties.TargetFatG) * 9;
             double carbWeight = Math.Abs(carb - plan.PlanProperties.TargetCarbG) * 4;
 
-            return calWeight;
-            // return calWeight + protWeight + fatWeight + carbWeight;
+            return calWeight + protWeight + fatWeight + carbWeight;
         }
 
         public static List<Plan> SelectionPair(List<Plan> population)
@@ -66,15 +65,18 @@ namespace DietPlanner.Models
 
             Plan first = SelectParent();
             Plan second;
+            int maxTries = 10; // To avoid infinite loop if all plans are the same
+            int tries = 0;
             do
             {
                 second = SelectParent();
-            } while (second == first);
+                tries++;
+            } while (first.Meals.SequenceEqual(second.Meals) && tries < maxTries);
 
             return [first, second];
         }
 
-        public static List<Plan> SinglePointCrossover(Plan a, Plan b)
+        public static List<Plan> UniformCrossover(Plan a, Plan b)
         {
             if (a.Meals.Count != b.Meals.Count)
             {
@@ -82,18 +84,25 @@ namespace DietPlanner.Models
             }
 
             int length = a.Meals.Count;
-            if (length < 2)
-            {
-                return [a, b];
-            }
-
-            int p = random.Next(1, length);
-
             Plan offspring1 = new(a.PlanProperties);
             Plan offspring2 = new(a.PlanProperties);
 
-            offspring1.Meals = [.. a.Meals.Take(p), .. b.Meals.Skip(p)];
-            offspring2.Meals = [.. b.Meals.Take(p), .. a.Meals.Skip(p)];
+            offspring1.Meals = new List<Meal>(length);
+            offspring2.Meals = new List<Meal>(length);
+
+            for (int i = 0; i < length; i++)
+            {
+                if (random.NextDouble() < 0.5)
+                {
+                    offspring1.Meals.Add(a.Meals[i]);
+                    offspring2.Meals.Add(b.Meals[i]);
+                }
+                else
+                {
+                    offspring1.Meals.Add(b.Meals[i]);
+                    offspring2.Meals.Add(a.Meals[i]);
+                }
+            }
 
             return [offspring1, offspring2];
         }
@@ -104,8 +113,7 @@ namespace DietPlanner.Models
             {
                 Meals = [.. plan.Meals]
             };
-            int i = 0;
-            while (i < num)
+            for (int i = 0; i < num; i++)
             {
                 if (random.NextDouble() > probability)
                 {
@@ -118,7 +126,6 @@ namespace DietPlanner.Models
                     Meal randomMeal = matchingMeals[random.Next(matchingMeals.Count)];
                     mutatedPlan.Meals[index] = randomMeal;
                 }
-                i++;
             }
             return mutatedPlan;
         }
@@ -153,7 +160,7 @@ namespace DietPlanner.Models
                 for (int j = 0; j < offspringCount / 2; j++)
                 {
                     var parents = SelectionPair(population);
-                    var offsprings = SinglePointCrossover(parents[0], parents[1]);
+                    var offsprings = UniformCrossover(parents[0], parents[1]);
                     offsprings[0] = Mutation(offsprings[0], mealsByType);
                     offsprings[1] = Mutation(offsprings[1], mealsByType);
                     nextGeneration.Add(offsprings[0]);
@@ -162,7 +169,7 @@ namespace DietPlanner.Models
                 if (offspringCount % 2 != 0)
                 {
                     var parents = SelectionPair(population);
-                    var offsprings = SinglePointCrossover(parents[0], parents[1]);
+                    var offsprings = UniformCrossover(parents[0], parents[1]);
                     nextGeneration.Add(Mutation(offsprings[0], mealsByType));
                 }
                 population = nextGeneration;

@@ -67,7 +67,7 @@ namespace DietPlanner.Tests
             // Act
             var randomPlans = Genetic.GeneratePlans(plansToGenerate, validMeals, properties);
             var population = Genetic.RunEvolution(plansToGenerate, validMeals, properties, generations);
-            population = [.. population.OrderBy(Genetic.Unfitness)];
+            // population = [.. population.OrderBy(Genetic.Unfitness)];
 
             // Assert
             Assert.Equal(population.Count, plansToGenerate);
