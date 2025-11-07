@@ -507,6 +507,56 @@ namespace DietPlanner.DataAccess
                     Carbs = 42,
                     Fat = 31,
                     Allergen = Allergen.None
+                },
+                new Food
+                {
+                    FoodId = 51,
+                    Name = "Onion",
+                    Calories = 40,
+                    Protein = 1.1,
+                    Carbs = 9.3,
+                    Fat = 0.1,
+                    Allergen = Allergen.None
+                },
+                new Food
+                {
+                    FoodId = 52,
+                    Name = "Garlic",
+                    Calories = 149,
+                    Protein = 6.4,
+                    Carbs = 33,
+                    Fat = 0.5,
+                    Allergen = Allergen.None
+                },
+                new Food
+                {
+                    FoodId = 53,
+                    Name = "Carrot",
+                    Calories = 41,
+                    Protein = 0.9,
+                    Carbs = 9.6,
+                    Fat = 0.2,
+                    Allergen = Allergen.None
+                },
+                new Food
+                {
+                    FoodId = 54,
+                    Name = "Lettuce",
+                    Calories = 17,
+                    Protein = 1.2,
+                    Carbs = 3.3,
+                    Fat = 0.3,
+                    Allergen = Allergen.None
+                },
+                new Food
+                {
+                    FoodId = 55,
+                    Name = "Potato",
+                    Calories = 93,
+                    Protein = 2.5,
+                    Carbs = 21,
+                    Fat = 0.1,
+                    Allergen = Allergen.None
                 }
             );
         }

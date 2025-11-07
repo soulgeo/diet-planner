@@ -39,7 +39,14 @@ namespace DietPlanner.DataAccess
                 new Meal { MealId = 29, Name = "Corn & Black Bean Salad", MealType = MealType.Dinner },
                 new Meal { MealId = 30, Name = "Dark Chocolate & Almonds", MealType = MealType.AfternoonSnack },
                 new Meal { MealId = 31, Name = "Chia Pudding with Berries", MealType = MealType.Breakfast },
-                new Meal { MealId = 32, Name = "Grilled Beef & Veggies", MealType = MealType.Dinner }
+                new Meal { MealId = 32, Name = "Grilled Beef & Veggies", MealType = MealType.Dinner },
+
+                // New Low-Fat Meals
+                new Meal { MealId = 33, Name = "Simple Fruit Salad", MealType = MealType.Breakfast },
+                new Meal { MealId = 34, Name = "Lean Turkey Salad", MealType = MealType.Lunch },
+                new Meal { MealId = 35, Name = "Steamed Salmon & Broccoli", MealType = MealType.Dinner },
+                new Meal { MealId = 36, Name = "Hummus on Wholemeal Bread", MealType = MealType.MorningSnack },
+                new Meal { MealId = 37, Name = "Greek Yogurt with Berries", MealType = MealType.AfternoonSnack }
             );
         }
     }
