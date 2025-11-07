@@ -27,27 +27,21 @@ namespace DietPlanner.Models
         {
             double calories = 0, protein = 0, fat = 0, carb = 0;
 
-            var mealIds = plan.Meals.Select(m => m.MealId).ToList();
-            var mealContentsByMeal = FoodRepository.GetMealContentsForMeals(mealIds);
-
             foreach (var meal in plan.Meals)
             {
-                if (mealContentsByMeal.TryGetValue(meal.MealId, out var mealContents))
+                foreach (var mc in meal.MealContents)
                 {
-                    foreach (var mc in mealContents)
-                    {
-                        calories += (mc.Food.Calories / 100.0) * mc.QuantityGrams;
-                        protein += (mc.Food.Protein / 100.0) * mc.QuantityGrams;
-                        fat += (mc.Food.Fat / 100.0) * mc.QuantityGrams;
-                        carb += (mc.Food.Carbs / 100.0) * mc.QuantityGrams;
-                    }
+                    calories += (mc.Food.Calories / 100.0) * mc.QuantityGrams;
+                    protein += (mc.Food.Protein / 100.0) * mc.QuantityGrams;
+                    fat += (mc.Food.Fat / 100.0) * mc.QuantityGrams;
+                    carb += (mc.Food.Carbs / 100.0) * mc.QuantityGrams;
                 }
             }
 
-            double calWeight = Math.Abs(calories - plan.PlanProperties.DailyCalorieTarget);
-            double protWeight = Math.Abs(protein - plan.PlanProperties.TargetProteinG) * 4;
-            double fatWeight = Math.Abs(fat - plan.PlanProperties.TargetFatG) * 9;
-            double carbWeight = Math.Abs(carb - plan.PlanProperties.TargetCarbG) * 4;
+            double calWeight = Math.Abs(calories - (plan.PlanProperties.DailyCalorieTarget * 7));
+            double protWeight = Math.Abs(protein - (plan.PlanProperties.TargetProteinG * 7)) * 4;
+            double fatWeight = Math.Abs(fat - (plan.PlanProperties.TargetFatG * 7)) * 9;
+            double carbWeight = Math.Abs(carb - (plan.PlanProperties.TargetCarbG * 7)) * 4;
 
             return calWeight + protWeight + fatWeight + carbWeight;
         }
