@@ -62,7 +62,7 @@ namespace DietPlanner.Tests
             {
                 WeightGoal = WeightGoal.MidLoss
             };
-            int generations = 1000;
+            int generations = 100;
 
             // Act
             var randomPlans = Genetic.GeneratePlans(plansToGenerate, validMeals, properties);
@@ -95,19 +95,42 @@ namespace DietPlanner.Tests
             }
 
             var bestPlan = population[0];
-            var mealIds = bestPlan.Meals.Select(m => m.MealId).ToList();
-            List<Food> foods = FoodRepository.GetFoodsForMeals(mealIds);
 
-            int calories = foods.Sum(f => f.Calories);
-            double protein = foods.Sum(f => f.Protein);
-            double fat = foods.Sum(f => f.Fat);
-            double carb = foods.Sum(f => f.Carbs);
+            double calories = 0, protein = 0, fat = 0, carb = 0;
+
+            foreach (var meal in bestPlan.Meals)
+            {
+                foreach (var mc in meal.MealContents)
+                {
+                    calories += (mc.Food.Calories / 100.0) * mc.QuantityGrams;
+                    protein += (mc.Food.Protein / 100.0) * mc.QuantityGrams;
+                    fat += (mc.Food.Fat / 100.0) * mc.QuantityGrams;
+                    carb += (mc.Food.Carbs / 100.0) * mc.QuantityGrams;
+                }
+            }
 
             Console.WriteLine("\nBest Plan Nutritional Information:");
-            Console.WriteLine($"- Calories: {calories} kcal");
+            Console.WriteLine($"- Calories: {calories:F0} kcal");
             Console.WriteLine($"- Protein: {protein:F2} g");
             Console.WriteLine($"- Fat: {fat:F2} g");
             Console.WriteLine($"- Carbs: {carb:F2} g");
+
+            Console.WriteLine("\nBest Plan Meals:");
+            // Assuming 3 meals per day (Breakfast, Lunch, Dinner) for 7 days
+            // The meals are added in order: Day1-B, Day1-L, Day1-D, Day2-B, Day2-L, Day2-D, ...
+            for (int day = 0; day < 7; day++)
+            {
+                Console.WriteLine($"--- Day {day + 1} ---");
+                for (int mealIndex = 0; mealIndex < 3; mealIndex++) // Assuming 3 meals per day
+                {
+                    int currentMealInList = (day * 3) + mealIndex;
+                    if (currentMealInList < bestPlan.Meals.Count)
+                    {
+                        var meal = bestPlan.Meals[currentMealInList];
+                        Console.WriteLine($"  {meal.MealType}: {meal.Name}");
+                    }
+                }
+            }
         }
     }
 }
