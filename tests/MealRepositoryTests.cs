@@ -19,6 +19,7 @@ namespace DietPlanner.Tests
             var validMeals = MealRepository.GetValidMeals(patient);
 
             // Assert
+            Assert.NotEmpty(validMeals);
             Assert.DoesNotContain(validMeals, meal => meal.MealContents.Any(mc => mc.Food.Allergen == Allergen.Nuts));
             Assert.DoesNotContain(validMeals, meal => meal.MealContents.Any(mc => mc.Food.Name == "Tofu"));
         }

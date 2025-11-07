@@ -11,8 +11,8 @@ namespace DietPlanner.Tests
             // Assign
             var patient = new Patient
             {
-                Allergies = new List<Allergen> { Allergen.Nuts },
-                LeastFavorites = new List<Food> { new Food { Name = "Tofu" } }
+                Allergies = [Allergen.Nuts],
+                LeastFavorites = [new Food { Name = "Tofu" }]
             };
             var plan = new Plan(new PlanProperties(patient, 30, 30, 40));
 
@@ -21,9 +21,14 @@ namespace DietPlanner.Tests
             plan.AddRandomMealsFromList(validMeals);
 
             // Assert
+            Assert.DoesNotContain(validMeals, meal => meal.MealContents.Any(mc => mc.Food.Allergen == Allergen.Nuts));
+            Assert.DoesNotContain(validMeals, meal => meal.MealContents.Any(mc => mc.Food.Name == "Tofu"));
+
+            int i = 0;
             foreach (var meal in plan.Meals)
             {
-                Console.WriteLine($"Meal: {meal.Name}, Type: {meal.MealType.ToString()}");
+                i++;
+                Console.WriteLine($"Meal {i}: {meal.Name}, Type: {meal.MealType}");
             }
         }
     }
