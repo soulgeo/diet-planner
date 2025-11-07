@@ -82,11 +82,13 @@ namespace DietPlanner.Tests
             Console.WriteLine($"Target Daily Protein: {properties.TargetProteinG} grams");
             Console.WriteLine($"Target Daily Fat: {properties.TargetFatG} grams");
             Console.WriteLine($"Target Daily Carbs: {properties.TargetCarbG} grams");
+
+            Console.WriteLine("Random population:");
             for (int i = 0; i < randomPlans.Count; i++)
             {
                 Console.WriteLine($"Plan {i + 1} (Unfitness: {Genetic.Unfitness(randomPlans[i])})");
             }
-            Console.WriteLine("");
+            Console.WriteLine("Population after evolution:");
             for (int i = 0; i < population.Count; i++)
             {
                 Console.WriteLine($"Plan {i + 1} (Unfitness: {Genetic.Unfitness(population[i])})");

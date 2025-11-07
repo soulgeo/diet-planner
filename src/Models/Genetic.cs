@@ -7,7 +7,7 @@ namespace DietPlanner.Models
 {
     public static class Genetic
     {
-        private static readonly Random random = new Random();
+        private static readonly Random random = new();
 
         public static List<Plan> GeneratePlans(int amount, List<Meal> validMeals, PlanProperties planProperties)
         {
@@ -25,20 +25,26 @@ namespace DietPlanner.Models
 
         public static double Unfitness(Plan plan)
         {
-            int calories = 0;
-            double protein = 0, fat = 0, carb = 0;
+            double calories = 0, protein = 0, fat = 0, carb = 0;
 
             var mealIds = plan.Meals.Select(m => m.MealId).ToList();
-            List<Food> foods = FoodRepository.GetFoodsForMeals(mealIds);
-            foreach (var f in foods)
+            var mealContentsByMeal = FoodRepository.GetMealContentsForMeals(mealIds);
+
+            foreach (var meal in plan.Meals)
             {
-                calories += f.Calories;
-                protein += f.Protein;
-                fat += f.Fat;
-                carb += f.Carbs;
+                if (mealContentsByMeal.TryGetValue(meal.MealId, out var mealContents))
+                {
+                    foreach (var mc in mealContents)
+                    {
+                        calories += (mc.Food.Calories / 100.0) * mc.QuantityGrams;
+                        protein += (mc.Food.Protein / 100.0) * mc.QuantityGrams;
+                        fat += (mc.Food.Fat / 100.0) * mc.QuantityGrams;
+                        carb += (mc.Food.Carbs / 100.0) * mc.QuantityGrams;
+                    }
+                }
             }
 
-            int calWeight = Math.Abs(calories - plan.PlanProperties.DailyCalorieTarget);
+            double calWeight = Math.Abs(calories - plan.PlanProperties.DailyCalorieTarget);
             double protWeight = Math.Abs(protein - plan.PlanProperties.TargetProteinG) * 4;
             double fatWeight = Math.Abs(fat - plan.PlanProperties.TargetFatG) * 9;
             double carbWeight = Math.Abs(carb - plan.PlanProperties.TargetCarbG) * 4;
