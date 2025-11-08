@@ -31,19 +31,33 @@ namespace DietPlanner.Models
             {
                 foreach (var mc in meal.MealContents)
                 {
-                    calories += (mc.Food.Calories / 100.0) * mc.QuantityGrams;
-                    protein += (mc.Food.Protein / 100.0) * mc.QuantityGrams;
-                    fat += (mc.Food.Fat / 100.0) * mc.QuantityGrams;
-                    carb += (mc.Food.Carbs / 100.0) * mc.QuantityGrams;
+                    calories += mc.Food.Calories / 100.0 * mc.QuantityGrams;
+                    protein += mc.Food.Protein / 100.0 * mc.QuantityGrams;
+                    fat += mc.Food.Fat / 100.0 * mc.QuantityGrams;
+                    carb += mc.Food.Carbs / 100.0 * mc.QuantityGrams;
                 }
             }
+            int calMult = 3;
+            int pMult = 1;
+            int fMult = 1;
+            int carbMult = 1;
 
-            double calWeight = Math.Abs(calories - (plan.PlanProperties.DailyCalorieTarget * 7));
-            double protWeight = Math.Abs(protein - (plan.PlanProperties.TargetProteinG * 7)) * 4;
-            double fatWeight = Math.Abs(fat - (plan.PlanProperties.TargetFatG * 7)) * 9;
-            double carbWeight = Math.Abs(carb - (plan.PlanProperties.TargetCarbG * 7)) * 4;
+            double calWeight = calMult * Math.Abs(calories - (plan.PlanProperties.DailyCalorieTarget * 7));
+            double protWeight = pMult * Math.Abs(protein - (plan.PlanProperties.TargetProteinG * 7)) * 4;
+            double fatWeight = fMult * Math.Abs(fat - (plan.PlanProperties.TargetFatG * 7)) * 9;
+            double carbWeight = carbMult * Math.Abs(carb - (plan.PlanProperties.TargetCarbG * 7)) * 4;
 
-            return calWeight + protWeight + fatWeight + carbWeight;
+            double nutritionalUnfitness = calWeight + protWeight + fatWeight + carbWeight;
+
+            // Variety Penalty
+            int uniqueMealCount = plan.Meals.Distinct().Count();
+            int totalMeals = plan.Meals.Count;
+            double varietyRatio = (double)uniqueMealCount / totalMeals;
+
+            // Penalize plans with low variety. The weight (20000) can be tuned.
+            double varietyPenalty = (1 - varietyRatio) * 20000;
+
+            return nutritionalUnfitness + varietyPenalty;
         }
 
         public static List<Plan> SelectionPair(List<Plan> population)
@@ -161,8 +175,8 @@ namespace DietPlanner.Models
                 {
                     var parents = SelectionPair(population);
                     var offsprings = UniformCrossover(parents[0], parents[1]);
-                    offsprings[0] = Mutation(offsprings[0], mealsByType);
-                    offsprings[1] = Mutation(offsprings[1], mealsByType);
+                    offsprings[0] = Mutation(offsprings[0], mealsByType, num: 4);
+                    offsprings[1] = Mutation(offsprings[1], mealsByType, num: 4);
                     nextGeneration.Add(offsprings[0]);
                     nextGeneration.Add(offsprings[1]);
                 }
@@ -170,7 +184,7 @@ namespace DietPlanner.Models
                 {
                     var parents = SelectionPair(population);
                     var offsprings = UniformCrossover(parents[0], parents[1]);
-                    nextGeneration.Add(Mutation(offsprings[0], mealsByType));
+                    nextGeneration.Add(Mutation(offsprings[0], mealsByType, num: 4));
                 }
                 population = nextGeneration;
             }
