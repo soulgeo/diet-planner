@@ -1,28 +1,39 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using DietPlanner.DataAccess;
 
 namespace DietPlanner.Models
 {
     public static class Genetic
     {
+        private static readonly int calMult = 3;
+        private static readonly int proteinMult = 1;
+        private static readonly int fatMult = 1;
+        private static readonly int carbMult = 1;
+        private static readonly int varietyWeight = 10000;
+
         private static readonly Random random = new();
 
+        /// <summary>
+        /// Generates some amount of new Plans with given Properties.
+        /// </summary>
         public static List<Plan> GeneratePlans(int amount, List<Meal> validMeals, PlanProperties planProperties)
         {
             List<Plan> population = [];
-            int i = 0;
-            while (i < amount)
+            for (int i = 0; i < amount; i++)
             {
                 Plan plan = new(planProperties);
                 plan.AddRandomMealsFromList(validMeals);
                 population.Add(plan);
-                i++;
             }
             return population;
         }
 
+        /// <summary>
+        /// Returns the "Unfitness" score for a Plan, which shows how far away from the target the plan is.
+        /// Unfitness is calculated based on distance from target calories and macros, summed with a penalty
+        /// for lack of variety in Meals.
+        /// </summary>
         public static double Unfitness(Plan plan)
         {
             double calories = 0, protein = 0, fat = 0, carb = 0;
@@ -37,29 +48,28 @@ namespace DietPlanner.Models
                     carb += mc.Food.Carbs / 100.0 * mc.QuantityGrams;
                 }
             }
-            int calMult = 3;
-            int pMult = 1;
-            int fMult = 1;
-            int carbMult = 1;
 
             double calWeight = calMult * Math.Abs(calories - (plan.PlanProperties.DailyCalorieTarget * 7));
-            double protWeight = pMult * Math.Abs(protein - (plan.PlanProperties.TargetProteinG * 7)) * 4;
-            double fatWeight = fMult * Math.Abs(fat - (plan.PlanProperties.TargetFatG * 7)) * 9;
+            double protWeight = proteinMult * Math.Abs(protein - (plan.PlanProperties.TargetProteinG * 7)) * 4;
+            double fatWeight = fatMult * Math.Abs(fat - (plan.PlanProperties.TargetFatG * 7)) * 9;
             double carbWeight = carbMult * Math.Abs(carb - (plan.PlanProperties.TargetCarbG * 7)) * 4;
 
             double nutritionalUnfitness = calWeight + protWeight + fatWeight + carbWeight;
 
-            // Variety Penalty
             int uniqueMealCount = plan.Meals.Distinct().Count();
             int totalMeals = plan.Meals.Count;
             double varietyRatio = (double)uniqueMealCount / totalMeals;
 
             // Penalize plans with low variety. The weight (20000) can be tuned.
-            double varietyPenalty = (1 - varietyRatio) * 20000;
+            double varietyPenalty = (1 - varietyRatio) * varietyWeight;
 
             return nutritionalUnfitness + varietyPenalty;
         }
 
+        /// <summary>
+        /// Returns a pair of Plans from a population, favoring plans with low Unfitness score. The plans
+        /// will be crossed over later.
+        /// </summary>
         public static List<Plan> SelectionPair(List<Plan> population)
         {
             if (population.Count < 2)
@@ -90,6 +100,10 @@ namespace DietPlanner.Models
             return [first, second];
         }
 
+        /// <summary>
+        /// Creates two offspring Plans from a pair of plans. Each offspring inherits a meal from one of 
+        /// the two parents with an equal probability.
+        /// </summary>
         public static List<Plan> UniformCrossover(Plan a, Plan b)
         {
             if (a.Meals.Count != b.Meals.Count)
@@ -121,6 +135,9 @@ namespace DietPlanner.Models
             return [offspring1, offspring2];
         }
 
+        /// <summary>
+        /// Replaces some random amount of Meals in a Plan (up to a maximum number) with other Meals chosen randomly.
+        /// </summary>
         public static Plan Mutation(Plan plan, Dictionary<MealType, List<Meal>> mealsByType, int num = 2, float probability = 0.7f)
         {
             Plan mutatedPlan = new(plan.PlanProperties)
@@ -144,6 +161,11 @@ namespace DietPlanner.Models
             return mutatedPlan;
         }
 
+        /// <summary>
+        /// Holds the main evolutionary loop. Starts by generating a random population of Plans and iterately improves
+        /// it by selecting the least "Unfit" Plans to reproduce and create the next generation, with random mutations
+        /// introducing variation.
+        /// </summary>
         public static List<Plan> RunEvolution(int populationSize, List<Meal> validMeals, PlanProperties planProperties, int generationLimit = 100)
         {
             var mealsByType = validMeals.GroupBy(m => m.MealType)
@@ -151,7 +173,11 @@ namespace DietPlanner.Models
             var population = GeneratePlans(populationSize, validMeals, planProperties);
             for (int i = 0; i < generationLimit; i++)
             {
-                population = population.OrderBy(p => Unfitness(p)).ToList();
+                population = [.. population.OrderBy(Unfitness)];
+                if (Unfitness(population[0]) < 100)
+                {
+                    break;
+                }
                 var nextGeneration = new List<Plan>();
 
                 var elite = new List<Plan>();
@@ -177,8 +203,7 @@ namespace DietPlanner.Models
                     var offsprings = UniformCrossover(parents[0], parents[1]);
                     offsprings[0] = Mutation(offsprings[0], mealsByType, num: 4);
                     offsprings[1] = Mutation(offsprings[1], mealsByType, num: 4);
-                    nextGeneration.Add(offsprings[0]);
-                    nextGeneration.Add(offsprings[1]);
+                    nextGeneration.AddRange(offsprings);
                 }
                 if (offspringCount % 2 != 0)
                 {
@@ -188,6 +213,7 @@ namespace DietPlanner.Models
                 }
                 population = nextGeneration;
             }
+            population = [.. population.OrderBy(Unfitness)];
             return population;
         }
     }

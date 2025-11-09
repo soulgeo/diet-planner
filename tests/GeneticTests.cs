@@ -49,18 +49,18 @@ namespace DietPlanner.Tests
             var patient = new Patient
             {
                 Age = 25,
-                WeightKg = 80,
+                WeightKg = 70,
                 HeightCm = 180,
-                ActivityLevel = ActivityLevel.ModeratelyActive,
-                Allergies = [Allergen.Nuts],
-                LeastFavorites = [new Food { Name = "Tofu" }]
+                ActivityLevel = ActivityLevel.VeryActive,
+                // Allergies = [Allergen.Nuts],
+                // LeastFavorites = [new Food { Name = "Tofu" }]
             };
 
             var validMeals = MealRepository.GetValidMeals(patient);
             int plansToGenerate = 10;
             var properties = new PlanProperties(patient)
             {
-                WeightGoal = WeightGoal.MidLoss,
+                WeightGoal = WeightGoal.Gain,
                 MealTypes = [MealType.Breakfast, MealType.MorningSnack, MealType.Lunch, MealType.AfternoonSnack, MealType.Dinner]
             };
             int generations = 5000;
@@ -68,7 +68,6 @@ namespace DietPlanner.Tests
             // Act
             var randomPlans = Genetic.GeneratePlans(plansToGenerate, validMeals, properties);
             var population = Genetic.RunEvolution(plansToGenerate, validMeals, properties, generations);
-            // population = [.. population.OrderBy(Genetic.Unfitness)];
 
             // Assert
             Assert.Equal(population.Count, plansToGenerate);
@@ -103,10 +102,10 @@ namespace DietPlanner.Tests
             {
                 foreach (var mc in meal.MealContents)
                 {
-                    calories += (mc.Food.Calories / 100.0) * mc.QuantityGrams;
-                    protein += (mc.Food.Protein / 100.0) * mc.QuantityGrams;
-                    fat += (mc.Food.Fat / 100.0) * mc.QuantityGrams;
-                    carb += (mc.Food.Carbs / 100.0) * mc.QuantityGrams;
+                    calories += mc.Food.Calories / 100.0 * mc.QuantityGrams;
+                    protein += mc.Food.Protein / 100.0 * mc.QuantityGrams;
+                    fat += mc.Food.Fat / 100.0 * mc.QuantityGrams;
+                    carb += mc.Food.Carbs / 100.0 * mc.QuantityGrams;
                 }
             }
 
