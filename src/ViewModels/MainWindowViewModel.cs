@@ -1,6 +1,9 @@
-﻿namespace diet_planner.ViewModels;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace diet_planner.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-    public string Greeting { get; } = "Welcome to Avalonia!";
+    [ObservableProperty]
+    public string testProperty = "Hello Avalonia!";
 }
