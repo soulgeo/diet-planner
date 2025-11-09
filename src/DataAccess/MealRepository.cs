@@ -7,20 +7,16 @@ namespace DietPlanner.DataAccess
 {
     public static class MealRepository
     {
-        public static List<Meal> GetValidMeals(Patient patient)
+        public static List<Meal> GetValidMeals(Patient patient, DietContext db)
         {
-            using (var db = new DietContext())
-            {
-                var meals = db.Meals
-                    .Include(m => m.MealContents)
-                    .ThenInclude(mc => mc.Food)
-                    .Where(m => !m.MealContents.Any(mc => patient.Allergies.Contains(mc.Food.Allergen)))
-                    .Where(m => !m.MealContents.Any(mc => patient.LeastFavorites.Select(f => f.Name).Contains(mc.Food.Name)))
-                    .ToList();
-                // var meals = db.Meals.ToList();
+            var meals = db.Meals
+                .Include(m => m.MealContents)
+                .ThenInclude(mc => mc.Food)
+                .Where(m => !m.MealContents.Any(mc => patient.Allergies.Contains(mc.Food.Allergen)))
+                .Where(m => !m.MealContents.Any(mc => patient.LeastFavorites.Select(f => f.Name).Contains(mc.Food.Name)))
+                .ToList();
 
-                return meals;
-            }
+            return meals;
         }
     }
 }

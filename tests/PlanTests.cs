@@ -1,5 +1,6 @@
 using DietPlanner.Models;
 using DietPlanner.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace DietPlanner.Tests
 {
@@ -9,6 +10,12 @@ namespace DietPlanner.Tests
         public void AddRandomMealsFromList_Adds_Meals()
         {
             // Assign
+            var options = new DbContextOptionsBuilder<DietContext>()
+                .UseInMemoryDatabase(databaseName: "DietPlannerTest")
+                .Options;
+
+            using var context = new DietContext(options);
+
             var patient = new Patient
             {
                 Allergies = [Allergen.Nuts],
@@ -17,7 +24,7 @@ namespace DietPlanner.Tests
             var plan = new Plan(new PlanProperties(patient, 30, 30, 40));
 
             // Act
-            var validMeals = MealRepository.GetValidMeals(patient);
+            var validMeals = MealRepository.GetValidMeals(patient, context);
             plan.AddRandomMealsFromList(validMeals);
 
             // Assert

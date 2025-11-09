@@ -1,7 +1,5 @@
-﻿using System;
-using DietPlanner.Models;
+﻿using DietPlanner.Models;
 using Microsoft.EntityFrameworkCore;
-using System.IO;
 
 namespace DietPlanner.DataAccess
 {
@@ -21,23 +19,9 @@ namespace DietPlanner.DataAccess
             Database.EnsureCreated();
         }
 
-        public DbSet<Food> Foods { get; set; } = null!;
-        public DbSet<Meal> Meals { get; set; } = null!;
-        public DbSet<MealContent> MealContents { get; set; } = null!;
-
-        private readonly string path = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "DataAccess", "DietPlanner.db"));
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#if DEBUG
-                optionsBuilder.UseInMemoryDatabase(databaseName: "DietPlannerTest");
-#else
-                optionsBuilder.UseSqlite($"Data Source={path}");
-#endif
-            }
-        }
+        public DbSet<Food> Foods { get; set; }
+        public DbSet<Meal> Meals { get; set; }
+        public DbSet<MealContent> MealContents { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

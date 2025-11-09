@@ -1,5 +1,6 @@
 using DietPlanner.Models;
 using DietPlanner.DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace DietPlanner.Tests
 {
@@ -10,13 +11,19 @@ namespace DietPlanner.Tests
         public void GeneratePlans_Generates_Plans()
         {
             // Assign
+            var options = new DbContextOptionsBuilder<DietContext>()
+                .UseInMemoryDatabase(databaseName: "DietPlannerTest")
+                .Options;
+
+            using var context = new DietContext(options);
+
             var patient = new Patient
             {
                 Allergies = [Allergen.Nuts],
                 LeastFavorites = [new Food { Name = "Tofu" }]
             };
 
-            var validMeals = MealRepository.GetValidMeals(patient);
+            var validMeals = MealRepository.GetValidMeals(patient, context);
             int plansToGenerate = 10;
             var properties = new PlanProperties(patient);
 
@@ -46,21 +53,27 @@ namespace DietPlanner.Tests
         public void Evolutionary_Loop()
         {
             // Assign
+            var options = new DbContextOptionsBuilder<DietContext>()
+                .UseInMemoryDatabase(databaseName: "DietPlannerTest")
+                .Options;
+
+            using var context = new DietContext(options);
+
             var patient = new Patient
             {
                 Age = 25,
-                WeightKg = 70,
+                WeightKg = 80,
                 HeightCm = 180,
-                ActivityLevel = ActivityLevel.VeryActive,
-                // Allergies = [Allergen.Nuts],
-                // LeastFavorites = [new Food { Name = "Tofu" }]
+                ActivityLevel = ActivityLevel.ModeratelyActive,
+                Allergies = [Allergen.Nuts],
+                LeastFavorites = [new Food { Name = "Tofu" }]
             };
 
-            var validMeals = MealRepository.GetValidMeals(patient);
+            var validMeals = MealRepository.GetValidMeals(patient, context);
             int plansToGenerate = 10;
             var properties = new PlanProperties(patient)
             {
-                WeightGoal = WeightGoal.Gain,
+                WeightGoal = WeightGoal.Loss,
                 MealTypes = [MealType.Breakfast, MealType.MorningSnack, MealType.Lunch, MealType.AfternoonSnack, MealType.Dinner]
             };
             int generations = 5000;
