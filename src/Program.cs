@@ -3,6 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using DietPlanner.DataAccess;
+using Microsoft.EntityFrameworkCore;
+using System.IO;
 
 namespace diet_planner;
 
@@ -14,13 +16,20 @@ sealed class Program
     [STAThread]
     public static void Main(string[] args)
     {
+        var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        var dbPath = Path.Combine(appDataPath, "DietPlanner", "DietPlanner.db");
+
+        // Ensure the directory exists
+        var dbDir = Path.GetDirectoryName(dbPath);
+        if (dbDir != null)
+        {
+            Directory.CreateDirectory(dbDir);
+        }
 
         var host = Host.CreateDefaultBuilder(args)
             .ConfigureServices((context, services) =>
             {
-                services.AddDbContext<DietContext>(); // OnConfiguring will pick up provider
-                                                      // or explicitly configure:
-                                                      // services.AddDbContext<DietContext>(opts => opts.UseSqlite($"Data Source={path}"));
+                services.AddDbContext<DietContext>(opts => opts.UseSqlite($"Data Source={dbPath}"));
             })
             .Build();
 

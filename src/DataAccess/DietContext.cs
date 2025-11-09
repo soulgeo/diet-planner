@@ -1,31 +1,27 @@
-﻿using System;
-using DietPlanner.Models;
+﻿using DietPlanner.Models;
 using Microsoft.EntityFrameworkCore;
-using System.IO;
 
 namespace DietPlanner.DataAccess
 {
     public class DietContext : DbContext
     {
-        public DietContext()
-        {
+        private static readonly DbContextOptions<DietContext> _options = new DbContextOptionsBuilder<DietContext>()
+            .UseInMemoryDatabase(databaseName: "DietPlannerTest")
+            .Options;
 
+        public DietContext() : base(_options)
+        {
+            Database.EnsureCreated();
         }
 
-        public DbSet<Food> Foods { get; set; } = null!;
-        public DbSet<Meal> Meals { get; set; } = null!;
-        public DbSet<MealContent> MealContents { get; set; } = null!;
-
-        private readonly string path = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "DataAccess", "DietPlanner.db"));
-
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public DietContext(DbContextOptions<DietContext> options) : base(options)
         {
-            // #if DEBUG
-            // optionsBuilder.UseInMemoryDatabase(databaseName: "DietPlannerTest");
-            // #else
-            optionsBuilder.UseSqlite($"Data Source={path}");
-            // #endif
+            Database.EnsureCreated();
         }
+
+        public DbSet<Food> Foods { get; set; }
+        public DbSet<Meal> Meals { get; set; }
+        public DbSet<MealContent> MealContents { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
