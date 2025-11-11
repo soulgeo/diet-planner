@@ -37,6 +37,36 @@ public partial class MainWindowViewModel : ViewModelBase
     private List<KeyValuePair<string, List<Meal>>> displayedMealsByDay = new();
 
     [ObservableProperty]
+    private bool hasPlanSummary;
+
+    [ObservableProperty]
+    private double? patientTdee;
+
+    [ObservableProperty]
+    private double? targetDailyCalories;
+
+    [ObservableProperty]
+    private double? targetDailyProtein;
+
+    [ObservableProperty]
+    private double? targetDailyFat;
+
+    [ObservableProperty]
+    private double? targetDailyCarbs;
+
+    [ObservableProperty]
+    private double? bestPlanDailyCalories;
+
+    [ObservableProperty]
+    private double? bestPlanDailyProtein;
+
+    [ObservableProperty]
+    private double? bestPlanDailyFat;
+
+    [ObservableProperty]
+    private double? bestPlanDailyCarbs;
+
+    [ObservableProperty]
     private bool isFishAllergy = false;
 
     [ObservableProperty]
@@ -59,18 +89,6 @@ public partial class MainWindowViewModel : ViewModelBase
 
     [ObservableProperty]
     private ObservableCollection<Food> selectedLeastFavorites = new();
-
-    [ObservableProperty]
-    private double averageDailyCalories = 0;
-
-    [ObservableProperty]
-    private double averageDailyProtein = 0;
-
-    [ObservableProperty]
-    private double averageDailyFat = 0;
-
-    [ObservableProperty]
-    private double averageDailyCarbs = 0;
 
     public bool HasMeals => DisplayedMealsByDay.Count > 0;
 
@@ -115,7 +133,6 @@ public partial class MainWindowViewModel : ViewModelBase
         if (SelectedFood != null && !SelectedLeastFavorites.Any(f => f.FoodId == SelectedFood.FoodId))
         {
             SelectedLeastFavorites.Add(SelectedFood);
-            // clear selection so user can add the same item later if removed
             SelectedFood = null;
         }
     }
@@ -144,6 +161,17 @@ public partial class MainWindowViewModel : ViewModelBase
     [RelayCommand]
     private void GenerateMeals()
     {
+        HasPlanSummary = false;
+        PatientTdee = null;
+        TargetDailyCalories = null;
+        TargetDailyProtein = null;
+        TargetDailyFat = null;
+        TargetDailyCarbs = null;
+        BestPlanDailyCalories = null;
+        BestPlanDailyProtein = null;
+        BestPlanDailyFat = null;
+        BestPlanDailyCarbs = null;
+
         try
         {
             var appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
@@ -174,7 +202,30 @@ public partial class MainWindowViewModel : ViewModelBase
 
             var plan = new Plan(planProperties);
             var validMeals = MealRepository.GetValidMeals(patient, db);
-            plan.AddRandomMealsFromList(validMeals);
+
+            if (validMeals.Count == 0)
+            {
+                DisplayedMealsByDay = [];
+                return;
+            }
+
+            const int populationSize = 15;
+            const int generationLimit = 3000;
+
+            var evolvedPopulation = Genetic.RunEvolution(populationSize, validMeals, planProperties, generationLimit);
+            var bestPlan = evolvedPopulation.FirstOrDefault();
+
+            if (bestPlan == null || bestPlan.Meals.Count == 0)
+            {
+                plan.AddRandomMealsFromList(validMeals);
+                bestPlan = plan.Meals.Count > 0 ? plan : null;
+            }
+
+            if (bestPlan == null)
+            {
+                DisplayedMealsByDay = [];
+                return;
+            }
 
             // Organize meals by day 
             var mealsByDay = new List<KeyValuePair<string, List<Meal>>>();
@@ -183,9 +234,9 @@ public partial class MainWindowViewModel : ViewModelBase
             
             for (int dayIndex = 0; dayIndex < daysOfWeek.Count; dayIndex++)
             {
-               var dayName = $"Day{dayIndex + 1}";
+                var dayName = $"Day{dayIndex + 1}";
                 var startIndex = dayIndex * mealsPerDay;
-                var dayMeals = plan.Meals.Skip(startIndex).Take(mealsPerDay).ToList();
+                var dayMeals = bestPlan.Meals.Skip(startIndex).Take(mealsPerDay).ToList();
                 
                 if (dayMeals.Count > 0)
                 {
@@ -194,6 +245,37 @@ public partial class MainWindowViewModel : ViewModelBase
             }
 
             DisplayedMealsByDay = mealsByDay;
+
+            double totalCalories = 0;
+            double totalProtein = 0;
+            double totalFat = 0;
+            double totalCarbs = 0;
+
+            foreach (var meal in bestPlan.Meals)
+            {
+                foreach (var mc in meal.MealContents)
+                {
+                    totalCalories += mc.Food.Calories / 100.0 * mc.QuantityGrams;
+                    totalProtein += mc.Food.Protein / 100.0 * mc.QuantityGrams;
+                    totalFat += mc.Food.Fat / 100.0 * mc.QuantityGrams;
+                    totalCarbs += mc.Food.Carbs / 100.0 * mc.QuantityGrams;
+                }
+            }
+
+            PatientTdee = Math.Round(patient.TDEE, 2);
+            TargetDailyCalories = planProperties.DailyCalorieTarget;
+            TargetDailyProtein = Math.Round(planProperties.TargetProteinG, 2);
+            TargetDailyFat = Math.Round(planProperties.TargetFatG, 2);
+            TargetDailyCarbs = Math.Round(planProperties.TargetCarbG, 2);
+
+            const double daysInPlan = 7.0;
+
+            BestPlanDailyCalories = Math.Round(totalCalories / daysInPlan, 2);
+            BestPlanDailyProtein = Math.Round(totalProtein / daysInPlan, 2);
+            BestPlanDailyFat = Math.Round(totalFat / daysInPlan, 2);
+            BestPlanDailyCarbs = Math.Round(totalCarbs / daysInPlan, 2);
+
+            HasPlanSummary = true;
         }
         catch (Exception ex)
         {

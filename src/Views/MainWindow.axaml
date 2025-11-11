@@ -91,7 +91,8 @@
                     <ItemsControl ItemsSource="{Binding SelectedLeastFavorites}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="models:Food">
-                                <Border BorderThickness="1" 
+                                <Border BorderBrush="LightGray" 
+                                        BorderThickness="1" 
                                         CornerRadius="3" 
                                         Padding="8,4" 
                                         Margin="0,2">
@@ -126,6 +127,29 @@
             <Separator Grid.Row="1" Margin="0,20" IsVisible="{Binding HasMeals}"/>
 
             <StackPanel Grid.Row="2" Spacing="15" IsVisible="{Binding HasMeals}">
+                <Border Classes="summaryBorder" IsVisible="{Binding HasPlanSummary}" Padding="15">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="Plan Details" FontSize="18" FontWeight="Bold"/>
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="20">
+                            <StackPanel Grid.Column="0" Spacing="6">
+                                <TextBlock Text="Targets" FontWeight="Bold" Margin="0,0,0,4"/>
+                                <TextBlock Text="{Binding PatientTdee, StringFormat=TDEE: {0:F2} kcal}"/>
+                                <TextBlock Text="{Binding TargetDailyCalories, StringFormat=Target Daily Calories: {0:F0} kcal}"/>
+                                <TextBlock Text="{Binding TargetDailyProtein, StringFormat=Target Protein: {0:F2} g}"/>
+                                <TextBlock Text="{Binding TargetDailyFat, StringFormat=Target Fat: {0:F2} g}"/>
+                                <TextBlock Text="{Binding TargetDailyCarbs, StringFormat=Target Carbs: {0:F2} g}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Spacing="6">
+                                <TextBlock Text="Plan Daily Average" FontWeight="Bold" Margin="0,0,0,4"/>
+                                <TextBlock Text="{Binding BestPlanDailyCalories, StringFormat=Calories: {0:F0} kcal}"/>
+                                <TextBlock Text="{Binding BestPlanDailyProtein, StringFormat=Protein: {0:F2} g}"/>
+                                <TextBlock Text="{Binding BestPlanDailyFat, StringFormat=Fat: {0:F2} g}"/>
+                                <TextBlock Text="{Binding BestPlanDailyCarbs, StringFormat=Carbs: {0:F2} g}"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
                 <TextBlock Text="Meals" 
                            FontSize="20" 
                            FontWeight="Bold"
