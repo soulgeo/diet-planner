@@ -1,0 +1,46 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Design.PreviewWith>
+        <Border Padding="20">
+            <!-- Add Controls for Previewer Here -->
+            <Button Content="Hello World"></Button>
+        </Border>
+    </Design.PreviewWith>
+
+    <!-- Styles -->
+    <Style Selector="Border.dayBorder">
+        <Setter Property="BorderBrush" Value="{StaticResource DayBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="CornerRadius" Value="8"/>
+        <Setter Property="Padding" Value="15"/>
+        <Setter Property="Margin" Value="0,10"/>
+        <Setter Property="Background" Value="{StaticResource DayBackgroundBrush}"/>
+    </Style>
+
+    <Style Selector="Border.mealBorder">
+        <Setter Property="BorderBrush" Value="{StaticResource MealBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="5"/>
+        <Setter Property="Padding" Value="12"/>
+        <Setter Property="Margin" Value="0,6,0,0"/>
+        <Setter Property="Background" Value="{StaticResource MealBackgroundBrush}"/>
+    </Style>
+
+    <Style Selector="TextBlock.dayHeader">
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="Foreground" Value="{StaticResource DayHeaderForegroundBrush}"/>
+        <Setter Property="Margin" Value="0,0,0,8"/>
+    </Style>
+
+    <Style Selector="TextBlock.mealName">
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="Foreground" Value="{StaticResource MealNameForegroundBrush}"/>
+    </Style>
+
+    <Style Selector="TextBlock.mealType">
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Foreground" Value="{StaticResource MealTypeForegroundBrush}"/>
+    </Style>
+</Styles>
