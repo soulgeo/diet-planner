@@ -3,15 +3,16 @@
         xmlns:vm="using:diet_planner.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        xmlns:models="using:DietPlanner.Models"
+        mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="600"
         x:Class="diet_planner.Views.MainWindow"
+        x:Name="RootWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="diet_planner">
+        Title="Diet Planner"
+        Width="900" Height="600">
 
     <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
@@ -22,16 +23,17 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+
             <!-- Patient Data Form -->
             <StackPanel Grid.Row="0" Spacing="10">
                 <TextBlock Text="Patient Details" FontSize="20" FontWeight="Bold" Margin="0,0,0,10"/>
                 
                 <Grid ColumnDefinitions="180,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="10">
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Name:" VerticalAlignment="Center"/>
-                    <TextBox Grid.Row="0" Grid.Column="1" />
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="PatientName"/>
 
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Age:" VerticalAlignment="Center"/>
-                    <NumericUpDown Grid.Row="1" Grid.Column="1" Minimum="1" Maximum="150"/>
+                    <NumericUpDown Grid.Row="1" Grid.Column="1"  Minimum="1" Maximum="150"/>
 
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Gender:" VerticalAlignment="Center"/>
                     <ComboBox Grid.Row="2" Grid.Column="1" />
@@ -48,6 +50,7 @@
                     <TextBlock Grid.Row="6" Grid.Column="0" Text="Weight Goal:" VerticalAlignment="Center"/>
                     <ComboBox Grid.Row="6" Grid.Column="1" />
                 </Grid>
+
                 <!-- Allergies Section -->
                 <StackPanel Margin="0,15,0,0" Spacing="8">
                     <TextBlock Text="Allergens:" FontWeight="Bold" FontSize="14"/>
@@ -59,10 +62,76 @@
                         <CheckBox Content="Gluten" />
                     </WrapPanel>
                 </StackPanel>
+
+                <!-- Least Favorite Foods Section -->
+                <StackPanel Margin="0,15,0,0" Spacing="8">
+                    <TextBlock Text="Least Favorite Food:" FontWeight="Bold" FontSize="14"/>
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                        <ComboBox Grid.Column="0" MinWidth="200">
+                            <ComboBox>
+                                    <TextBlock Text="Name"/>
+                            </ComboBox>
+                        </ComboBox>
+                        <Button Grid.Column="1" 
+                                Content="Add" 
+                                Padding="15,5"/>
+                    </Grid>
+                    <ItemsControl >
+                        <ItemsControl>
+                                <Border >
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <TextBlock Grid.Column="0" 
+                                                   Text="Name" 
+                                                   VerticalAlignment="Center"/>
+                                        <Button Grid.Column="1" 
+                                                Content="✕" 
+                                                Padding="8,2"
+                                                FontSize="12"
+                                                MinWidth="30"
+                                                Margin="5,0,0,0"/>
+                                    </Grid>
+                                </Border>
+                        </ItemsControl>
+                    </ItemsControl>
+                </StackPanel>
+
+                <Button Content="Create Meal Plan" 
+                        HorizontalAlignment="Left"
+                        Margin="0,15,0,0"
+                        Padding="20,5"
+                        FontSize="14"/>
             </StackPanel>
-            
+
+            <!-- Meals Display -->
+            <Separator Grid.Row="1" />
+
+            <StackPanel Grid.Row="2" Spacing="15" >
+                <TextBlock Text="Γεύματα" />
+                
+                <ItemsControl >
+                    <ItemsControl>
+                            <Border >
+                                <StackPanel Spacing="12">
+                                    <TextBlock Text="day" />
+                                    
+                                    <ItemsControl>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate DataType="models:Meal">
+                                                <Border >
+                                                    <StackPanel Spacing="6">
+                                                        <TextBlock Text="mealname" />
+                                                        <TextBlock Text="mealtype" />
+                                                    </StackPanel>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </Border>
+                    </ItemsControl>
+                </ItemsControl>
+            </StackPanel>
         </Grid>
-        
     </ScrollViewer>
 
 </Window>
