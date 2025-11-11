@@ -3,18 +3,184 @@
         xmlns:vm="using:diet_planner.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        xmlns:models="using:DietPlanner.Models"
+        mc:Ignorable="d" d:DesignWidth="900" d:DesignHeight="600"
         x:Class="diet_planner.Views.MainWindow"
+        x:Name="RootWindow"
         x:DataType="vm:MainWindowViewModel"
         Icon="/Assets/avalonia-logo.ico"
-        Title="diet_planner">
+        Title="Diet Planner"
+        Width="900" Height="600">
 
     <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    <ScrollViewer>
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Patient Data Form -->
+            <StackPanel Grid.Row="0" Spacing="10">
+                <TextBlock Text="Patient Details" FontSize="20" FontWeight="Bold" Margin="0,0,0,10"/>
+                
+                <Grid ColumnDefinitions="180,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="10">
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Name:" VerticalAlignment="Center"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding PatientName}"/>
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Age:" VerticalAlignment="Center"/>
+                    <NumericUpDown Grid.Row="1" Grid.Column="1" Value="{Binding Age}" Minimum="1" Maximum="150"/>
+
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Gender:" VerticalAlignment="Center"/>
+                    <ComboBox Grid.Row="2" Grid.Column="1" 
+                              SelectedItem="{Binding SelectedGender}"
+                              ItemsSource="{Binding Genders}"/>
+
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Weight (kg):" VerticalAlignment="Center"/>
+                    <NumericUpDown Grid.Row="3" Grid.Column="1" Value="{Binding WeightKg}" Minimum="1" Maximum="500" Increment="0.1"/>
+
+                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Height (cm):" VerticalAlignment="Center"/>
+                    <NumericUpDown Grid.Row="4" Grid.Column="1" Value="{Binding HeightCm}" Minimum="50" Maximum="250" Increment="1"/>
+
+                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Activity Level:" VerticalAlignment="Center"/>
+                    <ComboBox Grid.Row="5" Grid.Column="1" 
+                              SelectedItem="{Binding SelectedActivityLevel}"
+                              ItemsSource="{Binding ActivityLevels}"/>
+
+                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Weight Goal:" VerticalAlignment="Center"/>
+                    <ComboBox Grid.Row="6" Grid.Column="1" 
+                              SelectedItem="{Binding SelectedWeightGoal}"
+                              ItemsSource="{Binding WeightGoals}"/>
+                </Grid>
+
+                <!-- Allergies Section -->
+                <StackPanel Margin="0,15,0,0" Spacing="8">
+                    <TextBlock Text="Allergens:" FontWeight="Bold" FontSize="14"/>
+                    <WrapPanel>
+                        <CheckBox Content="Fish" IsChecked="{Binding IsFishAllergy}"/>
+                        <CheckBox Content="Nuts" IsChecked="{Binding IsNutsAllergy}"/>
+                        <CheckBox Content="Dairy" IsChecked="{Binding IsDairyAllergy}"/>
+                        <CheckBox Content="Egg" IsChecked="{Binding IsEggAllergy}"/>
+                        <CheckBox Content="Gluten" IsChecked="{Binding IsGlutenAllergy}"/>
+                    </WrapPanel>
+                </StackPanel>
+
+                <!-- Least Favorite Foods Section -->
+                <StackPanel Margin="0,15,0,0" Spacing="8">
+                    <TextBlock Text="Least Favorite Food:" FontWeight="Bold" FontSize="14"/>
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                        <ComboBox Grid.Column="0" 
+                                  ItemsSource="{Binding AvailableFoods}"
+                                  SelectedItem="{Binding SelectedFood}"
+                                  MinWidth="200">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate DataType="models:Food">
+                                    <TextBlock Text="{Binding Name}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <Button Grid.Column="1" 
+                                Content="Add" 
+                                Command="{Binding AddLeastFavoriteCommand}"
+                                Padding="15,5"/>
+                    </Grid>
+                    <ItemsControl ItemsSource="{Binding SelectedLeastFavorites}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="models:Food">
+                                <Border BorderBrush="LightGray" 
+                                        BorderThickness="1" 
+                                        CornerRadius="3" 
+                                        Padding="8,4" 
+                                        Margin="0,2">
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <TextBlock Grid.Column="0" 
+                                                   Text="{Binding Name}" 
+                                                   VerticalAlignment="Center"/>
+                                        <Button Grid.Column="1" 
+                                                Content="✕" 
+                                                Command="{Binding DataContext.RemoveLeastFavoriteCommand, ElementName=RootWindow}"
+                                                CommandParameter="{Binding}"
+                                                Padding="8,2"
+                                                FontSize="12"
+                                                MinWidth="30"
+                                                Margin="5,0,0,0"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+
+                <Button Content="Create Meal Plan" 
+                        Command="{Binding GenerateMealsCommand}"
+                        HorizontalAlignment="Left"
+                        Margin="0,15,0,0"
+                        Padding="20,5"
+                        FontSize="14"/>
+            </StackPanel>
+
+            <!-- Meals Display -->
+            <Separator Grid.Row="1" Margin="0,20" IsVisible="{Binding HasMeals}"/>
+
+            <StackPanel Grid.Row="2" Spacing="15" IsVisible="{Binding HasMeals}">
+                <Border Classes="summaryBorder" IsVisible="{Binding HasPlanSummary}" Padding="15">
+                    <StackPanel Spacing="12">
+                        <TextBlock Text="Plan Details" FontSize="18" FontWeight="Bold"/>
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="20">
+                            <StackPanel Grid.Column="0" Spacing="6">
+                                <TextBlock Text="Targets" FontWeight="Bold" Margin="0,0,0,4"/>
+                                <TextBlock Text="{Binding PatientTdee, StringFormat=TDEE: {0:F2} kcal}"/>
+                                <TextBlock Text="{Binding TargetDailyCalories, StringFormat=Target Daily Calories: {0:F0} kcal}"/>
+                                <TextBlock Text="{Binding TargetDailyProtein, StringFormat=Target Protein: {0:F2} g}"/>
+                                <TextBlock Text="{Binding TargetDailyFat, StringFormat=Target Fat: {0:F2} g}"/>
+                                <TextBlock Text="{Binding TargetDailyCarbs, StringFormat=Target Carbs: {0:F2} g}"/>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Spacing="6">
+                                <TextBlock Text="Plan Daily Average" FontWeight="Bold" Margin="0,0,0,4"/>
+                                <TextBlock Text="{Binding BestPlanDailyCalories, StringFormat=Calories: {0:F0} kcal}"/>
+                                <TextBlock Text="{Binding BestPlanDailyProtein, StringFormat=Protein: {0:F2} g}"/>
+                                <TextBlock Text="{Binding BestPlanDailyFat, StringFormat=Fat: {0:F2} g}"/>
+                                <TextBlock Text="{Binding BestPlanDailyCarbs, StringFormat=Carbs: {0:F2} g}"/>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </Border>
+
+                <TextBlock Text="Meals" 
+                           FontSize="20" 
+                           FontWeight="Bold"
+                           Margin="0,0,0,10"/>
+                
+                <ItemsControl ItemsSource="{Binding DisplayedMealsByDay}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Classes="dayBorder">
+                                <StackPanel Spacing="12">
+                                    <TextBlock Text="{Binding Key}" Classes="dayHeader"/>
+                                    
+                                    <ItemsControl ItemsSource="{Binding Value}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate DataType="models:Meal">
+                                                <Border Classes="mealBorder">
+                                                    <StackPanel Spacing="6">
+                                                        <TextBlock Text="{Binding Name}" Classes="mealName"/>
+                                                        <TextBlock Text="{Binding MealType}" Classes="mealType"/>
+                                                    </StackPanel>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
 
 </Window>
