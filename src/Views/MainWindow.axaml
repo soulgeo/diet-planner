@@ -30,36 +30,42 @@
                 
                 <Grid ColumnDefinitions="180,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="10">
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Name:" VerticalAlignment="Center"/>
-                    <TextBox Grid.Row="0" Grid.Column="1" Text="PatientName"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding PatientName}"/>
 
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Age:" VerticalAlignment="Center"/>
-                    <NumericUpDown Grid.Row="1" Grid.Column="1"  Minimum="1" Maximum="150"/>
+                    <NumericUpDown Grid.Row="1" Grid.Column="1" Value="{Binding Age}" Minimum="1" Maximum="150"/>
 
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Gender:" VerticalAlignment="Center"/>
-                    <ComboBox Grid.Row="2" Grid.Column="1" />
+                    <ComboBox Grid.Row="2" Grid.Column="1" 
+                              SelectedItem="{Binding SelectedGender}"
+                              ItemsSource="{Binding Genders}"/>
 
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Weight (kg):" VerticalAlignment="Center"/>
-                    <NumericUpDown Grid.Row="3" Grid.Column="1"  Minimum="1" Maximum="500" Increment="0.1"/>
+                    <NumericUpDown Grid.Row="3" Grid.Column="1" Value="{Binding WeightKg}" Minimum="1" Maximum="500" Increment="0.1"/>
 
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Height (cm):" VerticalAlignment="Center"/>
-                    <NumericUpDown Grid.Row="4" Grid.Column="1"  Minimum="50" Maximum="250" Increment="1"/>
+                    <NumericUpDown Grid.Row="4" Grid.Column="1" Value="{Binding HeightCm}" Minimum="50" Maximum="250" Increment="1"/>
 
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="Activity Level:" VerticalAlignment="Center"/>
-                    <ComboBox Grid.Row="5" Grid.Column="1" />
+                    <ComboBox Grid.Row="5" Grid.Column="1" 
+                              SelectedItem="{Binding SelectedActivityLevel}"
+                              ItemsSource="{Binding ActivityLevels}"/>
 
                     <TextBlock Grid.Row="6" Grid.Column="0" Text="Weight Goal:" VerticalAlignment="Center"/>
-                    <ComboBox Grid.Row="6" Grid.Column="1" />
+                    <ComboBox Grid.Row="6" Grid.Column="1" 
+                              SelectedItem="{Binding SelectedWeightGoal}"
+                              ItemsSource="{Binding WeightGoals}"/>
                 </Grid>
 
                 <!-- Allergies Section -->
                 <StackPanel Margin="0,15,0,0" Spacing="8">
                     <TextBlock Text="Allergens:" FontWeight="Bold" FontSize="14"/>
                     <WrapPanel>
-                        <CheckBox Content="Fish" />
-                        <CheckBox Content="Nuts" />
-                        <CheckBox Content="Dairy" />
-                        <CheckBox Content="Egg" />
-                        <CheckBox Content="Gluten" />
+                        <CheckBox Content="Fish" IsChecked="{Binding IsFishAllergy}"/>
+                        <CheckBox Content="Nuts" IsChecked="{Binding IsNutsAllergy}"/>
+                        <CheckBox Content="Dairy" IsChecked="{Binding IsDairyAllergy}"/>
+                        <CheckBox Content="Egg" IsChecked="{Binding IsEggAllergy}"/>
+                        <CheckBox Content="Gluten" IsChecked="{Binding IsGlutenAllergy}"/>
                     </WrapPanel>
                 </StackPanel>
 
@@ -67,35 +73,49 @@
                 <StackPanel Margin="0,15,0,0" Spacing="8">
                     <TextBlock Text="Least Favorite Food:" FontWeight="Bold" FontSize="14"/>
                     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
-                        <ComboBox Grid.Column="0" MinWidth="200">
-                            <ComboBox>
-                                    <TextBlock Text="Name"/>
-                            </ComboBox>
+                        <ComboBox Grid.Column="0" 
+                                  ItemsSource="{Binding AvailableFoods}"
+                                  SelectedItem="{Binding SelectedFood}"
+                                  MinWidth="200">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate DataType="models:Food">
+                                    <TextBlock Text="{Binding Name}"/>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
                         </ComboBox>
                         <Button Grid.Column="1" 
                                 Content="Add" 
+                                Command="{Binding AddLeastFavoriteCommand}"
                                 Padding="15,5"/>
                     </Grid>
-                    <ItemsControl >
-                        <ItemsControl>
-                                <Border >
+                    <ItemsControl ItemsSource="{Binding SelectedLeastFavorites}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="models:Food">
+                                <Border BorderThickness="1" 
+                                        CornerRadius="3" 
+                                        Padding="8,4" 
+                                        Margin="0,2">
                                     <Grid ColumnDefinitions="*,Auto">
                                         <TextBlock Grid.Column="0" 
-                                                   Text="Name" 
+                                                   Text="{Binding Name}" 
                                                    VerticalAlignment="Center"/>
                                         <Button Grid.Column="1" 
                                                 Content="✕" 
+                                                Command="{Binding DataContext.RemoveLeastFavoriteCommand, ElementName=RootWindow}"
+                                                CommandParameter="{Binding}"
                                                 Padding="8,2"
                                                 FontSize="12"
                                                 MinWidth="30"
                                                 Margin="5,0,0,0"/>
                                     </Grid>
                                 </Border>
-                        </ItemsControl>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
                     </ItemsControl>
                 </StackPanel>
 
                 <Button Content="Create Meal Plan" 
+                        Command="{Binding GenerateMealsCommand}"
                         HorizontalAlignment="Left"
                         Margin="0,15,0,0"
                         Padding="20,5"
@@ -103,24 +123,28 @@
             </StackPanel>
 
             <!-- Meals Display -->
-            <Separator Grid.Row="1" />
+            <Separator Grid.Row="1" Margin="0,20" IsVisible="{Binding HasMeals}"/>
 
-            <StackPanel Grid.Row="2" Spacing="15" >
-                <TextBlock Text="Γεύματα" />
+            <StackPanel Grid.Row="2" Spacing="15" IsVisible="{Binding HasMeals}">
+                <TextBlock Text="Meals" 
+                           FontSize="20" 
+                           FontWeight="Bold"
+                           Margin="0,0,0,10"/>
                 
-                <ItemsControl >
-                    <ItemsControl>
-                            <Border >
+                <ItemsControl ItemsSource="{Binding DisplayedMealsByDay}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Classes="dayBorder">
                                 <StackPanel Spacing="12">
-                                    <TextBlock Text="day" />
+                                    <TextBlock Text="{Binding Key}" Classes="dayHeader"/>
                                     
-                                    <ItemsControl>
+                                    <ItemsControl ItemsSource="{Binding Value}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate DataType="models:Meal">
-                                                <Border >
+                                                <Border Classes="mealBorder">
                                                     <StackPanel Spacing="6">
-                                                        <TextBlock Text="mealname" />
-                                                        <TextBlock Text="mealtype" />
+                                                        <TextBlock Text="{Binding Name}" Classes="mealName"/>
+                                                        <TextBlock Text="{Binding MealType}" Classes="mealType"/>
                                                     </StackPanel>
                                                 </Border>
                                             </DataTemplate>
@@ -128,7 +152,8 @@
                                     </ItemsControl>
                                 </StackPanel>
                             </Border>
-                    </ItemsControl>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </StackPanel>
         </Grid>
