@@ -285,15 +285,15 @@ public partial class MainWindowViewModel : ViewModelBase
 
             // Organize meals by day 
             var mealsByDay = new List<KeyValuePair<string, List<Meal>>>();
-            var mealsPerDay = planProperties.MealTypes.Count; 
-            var daysOfWeek = Enum.GetValues<DayOfWeek>().ToList();
-            
+            var mealsPerDay = planProperties.MealTypes.Count;
+            var daysOfWeek = Enum.GetValues<DayOfWeek>().OrderBy(d => d == DayOfWeek.Sunday).ToList();
+
             for (int dayIndex = 0; dayIndex < daysOfWeek.Count; dayIndex++)
             {
-                var dayName = $"Day{dayIndex + 1}";
+                var dayName = daysOfWeek[dayIndex].ToString();
                 var startIndex = dayIndex * mealsPerDay;
                 var dayMeals = bestPlan.Meals.Skip(startIndex).Take(mealsPerDay).ToList();
-                
+
                 if (dayMeals.Count > 0)
                 {
                     mealsByDay.Add(new KeyValuePair<string, List<Meal>>(dayName, dayMeals));
