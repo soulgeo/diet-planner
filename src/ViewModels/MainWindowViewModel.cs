@@ -217,7 +217,7 @@ public partial class MainWindowViewModel : ViewModelBase
 
             if (bestPlan == null || bestPlan.Meals.Count == 0)
             {
-                plan.AddRandomMealsFromList(validMeals);
+                plan.AddRandomMeals(validMeals);
                 bestPlan = plan.Meals.Count > 0 ? plan : null;
             }
 

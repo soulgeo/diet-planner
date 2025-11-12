@@ -9,7 +9,7 @@ namespace DietPlanner.Models
         public PlanProperties PlanProperties { get; } = planProperties;
         public List<Meal> Meals { get; set; } = [];
 
-        public void AddRandomMealsFromList(List<Meal> meals)
+        public void AddRandomMeals(List<Meal> meals)
         {
             var random = new Random();
             var mealsByType = meals.GroupBy(m => m.MealType)
