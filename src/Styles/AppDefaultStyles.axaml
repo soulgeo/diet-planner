@@ -43,4 +43,14 @@
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="Foreground" Value="{StaticResource MealTypeForegroundBrush}"/>
     </Style>
+
+    <Style Selector="Expander > ToggleButton">
+        <Setter Property="Background" Value="{StaticResource MealBackgroundBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource MealBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="CornerRadius" Value="5"/>
+        <Setter Property="Padding" Value="12"/>
+        <Setter Property="Margin" Value="0,6,0,0"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+    </Style>
 </Styles>

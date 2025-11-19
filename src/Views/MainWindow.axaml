@@ -196,19 +196,32 @@
                                 <StackPanel Spacing="12">
                                     <TextBlock Text="{Binding Key}" Classes="dayHeader"/>
                                     
-                                    <ItemsControl ItemsSource="{Binding Value}">
+                                                                         <ItemsControl ItemsSource="{Binding Value}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate DataType="models:Meal">
-                                                <Border Classes="mealBorder">
-                                                    <StackPanel Spacing="6">
-                                                        <TextBlock Text="{Binding Name}" Classes="mealName"/>
-                                                        <TextBlock Text="{Binding MealType}" Classes="mealType"/>
-                                                    </StackPanel>
-                                                </Border>
+                                                <!-- <Border Classes="mealBorder"> -->
+                                                    <Expander HorizontalAlignment="Stretch">
+                                                        <Expander.Header>
+                                                            <StackPanel Spacing="6">
+                                                                <TextBlock Text="{Binding Name}" Classes="mealName"/>
+                                                                <TextBlock Text="{Binding MealType}" Classes="mealType"/>
+                                                            </StackPanel>
+                                                        </Expander.Header>
+                                                        <ItemsControl ItemsSource="{Binding MealContents}" Margin="20,0,0,0">
+                                                            <ItemsControl.ItemTemplate>
+                                                                <DataTemplate DataType="models:MealContent">
+                                                                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto" ColumnSpacing="10">
+                                                                        <TextBlock Grid.Column="0" Text="{Binding Food.Name}"/>
+                                                                        <TextBlock Grid.Column="1" Text="{Binding QuantityGrams, StringFormat={}{0} g}"/>
+                                                                    </Grid>
+                                                                </DataTemplate>
+                                                            </ItemsControl.ItemTemplate>
+                                                        </ItemsControl>
+                                                    </Expander>
+                                                <!-- </Border> -->
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </StackPanel>
+                                    </ItemsControl>                                </StackPanel>
                             </Border>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
