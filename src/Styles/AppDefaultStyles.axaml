@@ -44,13 +44,47 @@
         <Setter Property="Foreground" Value="{StaticResource MealTypeForegroundBrush}"/>
     </Style>
 
-    <Style Selector="Expander > ToggleButton">
+    <Style Selector="Expander.mealExpander">
         <Setter Property="Background" Value="{StaticResource MealBackgroundBrush}"/>
         <Setter Property="BorderBrush" Value="{StaticResource MealBorderBrush}"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="CornerRadius" Value="5"/>
         <Setter Property="Padding" Value="12"/>
         <Setter Property="Margin" Value="0,6,0,0"/>
-        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="CornerRadius" Value="5"/>
+        <Setter Property="Template">
+        <ControlTemplate>
+            <Border
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="{TemplateBinding BorderThickness}"
+            CornerRadius="{TemplateBinding CornerRadius}"
+            Padding="{TemplateBinding Padding}"
+            Margin="{TemplateBinding Margin}">
+            <StackPanel>
+                <ToggleButton
+                HorizontalAlignment="Stretch"
+                IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                Background="{TemplateBinding Background}"
+                BorderBrush="{TemplateBinding BorderBrush}"
+                BorderThickness="0"
+                Padding="0"
+                Focusable="False">
+                <ContentPresenter
+                    Content="{TemplateBinding Header}"
+                    ContentTemplate="{TemplateBinding HeaderTemplate}"
+                    Margin="0"
+                    VerticalAlignment="Center"/>
+                </ToggleButton>
+                <ContentPresenter
+                Name="PART_Content"
+                Content="{TemplateBinding Content}"
+                ContentTemplate="{TemplateBinding ContentTemplate}"
+                Margin="0,8,0,0"
+                IsVisible="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}}"/>
+            </StackPanel>
+            </Border>
+        </ControlTemplate>
+        </Setter>
     </Style>
+
 </Styles>
