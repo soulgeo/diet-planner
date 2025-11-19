@@ -25,7 +25,7 @@ namespace DietPlanner.Tests
 
             // Act
             var validMeals = MealRepository.GetValidMeals(patient, context);
-            plan.AddRandomMealsFromList(validMeals);
+            plan.AddRandomMeals(validMeals);
 
             // Assert
             Assert.DoesNotContain(validMeals, meal => meal.MealContents.Any(mc => mc.Food.Allergen == Allergen.Nuts));
