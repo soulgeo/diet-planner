@@ -1,36 +1,36 @@
 ```mermaid
 classDiagram
     class Plan {
-        PlanProperties PlanProperties
-        List Meals
-        AddRandomMeals(List meals)
+        -PlanProperties PlanProperties
+        -List Meals
+        +AddRandomMeals(List meals)
     }
 
     class PlanProperties {
-        Patient patient
-        WeightGoal WeightGoal
-        Int ProteinPercent
-        Int FatPercent
-        Int CarbPercent
-        Int DailyCalorieTarget
-        Int TargetProteinG
-        Int TargetFatG
-        Int TargetCarbG
-        HashSet MealTypes
+        -Patient patient
+        -WeightGoal WeightGoal
+        -Int ProteinPercent
+        -Int FatPercent
+        -Int CarbPercent
+        -Int DailyCalorieTarget
+        -Int TargetProteinG
+        -Int TargetFatG
+        -Int TargetCarbG
+        -HashSet MealTypes
     }
     
     Plan o-- PlanProperties
     Plan *-- Meal
     
     class Patient {
-        String Name
-        Int Age
-        Gender Gender
-        Float WeightKg
-        Float HeightCm
-        ActivityLevel ActivityLevel
-        Double BMR
-        Double TDEE
+        -String Name
+        -Int Age
+        -Gender Gender
+        -Float WeightKg
+        -Float HeightCm
+        -ActivityLevel ActivityLevel
+        -Double BMR
+        -Double TDEE
     }
 
     class Gender{
@@ -53,10 +53,10 @@ classDiagram
     Patient *-- ActivityLevel
 
     class Meal {
-        Int MealId
-        String Name
-        MealType MealType
-        List MealContents
+        -Int MealId
+        -String Name
+        -MealType MealType
+        -List MealContents
     }
 
     class MealType {
@@ -72,19 +72,19 @@ classDiagram
     PlanProperties o-- MealType
 
     class MealContents {
-        Meal Meal
-        Food Food
-        Double QuantityGrams
+        -Meal Meal
+        -Food Food
+        -Double QuantityGrams
     }
 
     class Food {
-        Int FoodId
-        String Name
-        Int Calories
-        Double ProteinG
-        Double CarbsG
-        Double FatG
-        Allergen Allergen
+        -Int FoodId
+        -String Name
+        -Int Calories
+        -Double ProteinG
+        -Double CarbsG
+        -Double FatG
+        -Allergen Allergen
     }
 
     class Allergen {
