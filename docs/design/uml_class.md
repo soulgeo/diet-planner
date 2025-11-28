@@ -1,49 +1,11 @@
 ```mermaid
 classDiagram
-    class Patient {
-        String Name
-        Int Age
-        Gender Gender
-        Float WeightKg
-        Float HeightCm
-        ActivityLevel ActivityLevel
-        Double BMR
-        Double TDEE
+    class Plan {
+        PlanProperties PlanProperties
+        List Meals
+        AddRandomMeals(List meals)
     }
-    class Gender{
-        <<enumeration>>
-        Male
-        Female
-    }
-    class ActivityLevel{
-        <<enumeration>>
-        Sedentary
-        LightlyActive
-        ModeratelyActive
-        VeryActive
-        SuperActive
-    }
-    Patient *-- Gender
-    Patient *-- ActivityLevel
-    class Food {
-        Int FoodId
-        String Name
-        Int Calories
-        Double ProteinG
-        Double CarbsG
-        Double FatG
-        Allergen Allergen
-    }
-    class Allergen {
-        <<enumeration>>
-        None
-        Fish
-        Nuts
-        Dairy
-        Egg
-        Gluten
-    }
-    Food *-- Allergen
+
     class PlanProperties {
         Patient patient
         WeightGoal WeightGoal
@@ -56,16 +18,47 @@ classDiagram
         Int TargetCarbG
         HashSet MealTypes
     }
-    class Plan {
-        PlanProperties PlanProperties
-        List Meals
-        AddRandomMeals(List meals)
+    
+    Plan o-- PlanProperties
+    Plan *-- Meal
+    
+    class Patient {
+        String Name
+        Int Age
+        Gender Gender
+        Float WeightKg
+        Float HeightCm
+        ActivityLevel ActivityLevel
+        Double BMR
+        Double TDEE
     }
+
+    class Gender{
+        <<enumeration>>
+        Male
+        Female
+    }
+
+    class ActivityLevel{
+        <<enumeration>>
+        Sedentary
+        LightlyActive
+        ModeratelyActive
+        VeryActive
+        SuperActive
+    }
+    
+    PlanProperties o-- Patient
+    Patient *-- Gender
+    Patient *-- ActivityLevel
+
     class Meal {
         Int MealId
         String Name
         MealType MealType
+        List MealContents
     }
+
     class MealType {
         <<enumeration>>
         Breakfast
@@ -74,17 +67,37 @@ classDiagram
         AfternoonSnack
         Dinner
     }
+    
+    Meal *-- MealType
+    PlanProperties o-- MealType
+
     class MealContents {
         Meal Meal
         Food Food
         Double QuantityGrams
     }
-    PlanProperties o-- Patient
-    PlanProperties o-- MealType
-    Plan o-- PlanProperties
-    Plan *-- Meal
-    Meal *-- MealType
-    MealContents o-- Food
-    MealContents o-- Meal
 
+    class Food {
+        Int FoodId
+        String Name
+        Int Calories
+        Double ProteinG
+        Double CarbsG
+        Double FatG
+        Allergen Allergen
+    }
+
+    class Allergen {
+        <<enumeration>>
+        None
+        Fish
+        Nuts
+        Dairy
+        Egg
+        Gluten
+    }
+
+    Meal *-- MealContents
+    MealContents o-- Food
+    Food *-- Allergen
 ```
