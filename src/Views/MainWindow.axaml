@@ -28,7 +28,7 @@
             <StackPanel Grid.Row="0" Spacing="10">
                 <TextBlock Text="Patient Details" FontSize="20" FontWeight="Bold" Margin="0,0,0,10"/>
                 
-                <Grid ColumnDefinitions="180,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="10">
+                <Grid ColumnDefinitions="180,*" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="10">
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Name:" VerticalAlignment="Center"/>
                     <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding PatientName}"/>
 
@@ -48,19 +48,16 @@
 
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="Activity Level:" VerticalAlignment="Center"/>
                     <ComboBox Grid.Row="5" Grid.Column="1" 
-                              SelectedItem="{Binding SelectedActivityLevel}"
-                              ItemsSource="{Binding ActivityLevels}"/>
-
-                    <TextBlock Grid.Row="6" Grid.Column="0" Text="Weight Goal:" VerticalAlignment="Center"/>
-                    <ComboBox Grid.Row="6" Grid.Column="1" 
-                              SelectedItem="{Binding SelectedWeightGoal}"
-                              ItemsSource="{Binding WeightGoals}"/>
+                              ItemsSource="{Binding ActivityLevelItems}"
+                              SelectedValue="{Binding SelectedActivityLevel, Mode=TwoWay}"
+                              DisplayMemberBinding="{Binding Display}"
+                              SelectedValueBinding="{Binding Value}" />
                 </Grid>
 
                 <!-- Allergies Section -->
                 <StackPanel Margin="0,15,0,0" Spacing="8">
                     <TextBlock Text="Allergens:" FontWeight="Bold" FontSize="14"/>
-                    <WrapPanel>
+                    <WrapPanel LineSpacing="12" ItemSpacing="8">
                         <CheckBox Content="Fish" IsChecked="{Binding IsFishAllergy}"/>
                         <CheckBox Content="Nuts" IsChecked="{Binding IsNutsAllergy}"/>
                         <CheckBox Content="Dairy" IsChecked="{Binding IsDairyAllergy}"/>
@@ -115,6 +112,43 @@
                     </ItemsControl>
                 </StackPanel>
 
+                <!-- Plan Data Form -->
+                <TextBlock Text="Plan Details" FontSize="20" FontWeight="Bold" Margin="0,40,0,10"/>
+
+                <Grid ColumnDefinitions="180,*" RowDefinitions="Auto,Auto" RowSpacing="10">
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Weight Goal:" VerticalAlignment="Center"/>
+                    <ComboBox Grid.Row="0" Grid.Column="1" 
+                              ItemsSource="{Binding WeightGoalItems}"
+                              SelectedValue="{Binding SelectedWeightGoal, Mode=TwoWay}"
+                              DisplayMemberBinding="{Binding Display}"
+                              SelectedValueBinding="{Binding Value}" />
+
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Daily Meals:" VerticalAlignment="Center"/>
+                    <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Spacing="6">
+                        <CheckBox Content="Breakfast"        IsChecked="{Binding HasBreakfast, Mode=TwoWay}" />
+                        <CheckBox Content="Morning Snack"   IsChecked="{Binding HasMorningSnack, Mode=TwoWay}" />
+                        <CheckBox Content="Lunch"           IsChecked="{Binding HasLunch, Mode=TwoWay}" />
+                        <CheckBox Content="Afternoon Snack" IsChecked="{Binding HasAfternoonSnack, Mode=TwoWay}" />
+                        <CheckBox Content="Dinner"          IsChecked="{Binding HasDinner, Mode=TwoWay}" />
+                    </StackPanel>
+                </Grid>
+
+                <!-- Macro Split Section -->
+                <StackPanel Margin="0,15,0,0" Spacing="8">
+                    <TextBlock Text="Macronutrient Split (Must sum to 100%):" FontWeight="Bold" FontSize="14"/>
+                    <Grid ColumnDefinitions="180,*" RowDefinitions="Auto,Auto,Auto" RowSpacing="10">
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Protein:" VerticalAlignment="Center"/>
+                        <NumericUpDown Grid.Row="0" Grid.Column="1" Value="{Binding ProteinPercent}" Minimum="0" Maximum="100"/>
+
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Fat:" VerticalAlignment="Center"/>
+                        <NumericUpDown Grid.Row="1" Grid.Column="1" Value="{Binding FatPercent}" Minimum="0" Maximum="100"/>
+
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Carbs:" VerticalAlignment="Center"/>
+                        <NumericUpDown Grid.Row="2" Grid.Column="1" Value="{Binding CarbsPercent}" Minimum="0" Maximum="100"/>
+                    </Grid>
+                </StackPanel>
+
+
                 <Button Content="Create Meal Plan" 
                         Command="{Binding GenerateMealsCommand}"
                         HorizontalAlignment="Left"
@@ -162,19 +196,26 @@
                                 <StackPanel Spacing="12">
                                     <TextBlock Text="{Binding Key}" Classes="dayHeader"/>
                                     
-                                    <ItemsControl ItemsSource="{Binding Value}">
+                                                                         <ItemsControl ItemsSource="{Binding Value}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate DataType="models:Meal">
-                                                <Border Classes="mealBorder">
-                                                    <StackPanel Spacing="6">
-                                                        <TextBlock Text="{Binding Name}" Classes="mealName"/>
-                                                        <TextBlock Text="{Binding MealType}" Classes="mealType"/>
-                                                    </StackPanel>
-                                                </Border>
+                                                <!-- <Border Classes="mealBorder"> -->
+                                                    <Expander Classes="mealExpander" HorizontalAlignment="Stretch" Header="{Binding Name}">
+                                                        <ItemsControl ItemsSource="{Binding MealContents}">
+                                                            <ItemsControl.ItemTemplate>
+                                                                <DataTemplate DataType="models:MealContent">
+                                                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                                                                        <TextBlock Grid.Column="0" Text="{Binding Food.Name}"/>
+                                                                        <TextBlock Grid.Column="1" Text="{Binding QuantityGrams, StringFormat={}{0} g}"/>
+                                                                    </Grid>
+                                                                </DataTemplate>
+                                                            </ItemsControl.ItemTemplate>
+                                                        </ItemsControl>
+                                                    </Expander>
+                                                <!-- </Border> -->
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </StackPanel>
+                                    </ItemsControl>                                </StackPanel>
                             </Border>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>

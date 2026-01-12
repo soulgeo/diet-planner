@@ -23,7 +23,7 @@ namespace DietPlanner.Models
             for (int i = 0; i < amount; i++)
             {
                 Plan plan = new(planProperties);
-                plan.AddRandomMealsFromList(validMeals);
+                plan.AddRandomMeals(validMeals);
                 population.Add(plan);
             }
             return population;
