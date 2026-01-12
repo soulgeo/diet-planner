@@ -24,7 +24,6 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <!-- Patient Data Form -->
             <StackPanel Grid.Row="0" Spacing="10">
                 <TextBlock Text="Patient Details" FontSize="20" FontWeight="Bold" Margin="0,0,0,10"/>
                 
@@ -54,7 +53,6 @@
                               SelectedValueBinding="{Binding Value}" />
                 </Grid>
 
-                <!-- Allergies Section -->
                 <StackPanel Margin="0,15,0,0" Spacing="8">
                     <TextBlock Text="Allergens:" FontWeight="Bold" FontSize="14"/>
                     <WrapPanel LineSpacing="12" ItemSpacing="8">
@@ -66,7 +64,6 @@
                     </WrapPanel>
                 </StackPanel>
 
-                <!-- Least Favorite Foods Section -->
                 <StackPanel Margin="0,15,0,0" Spacing="8">
                     <TextBlock Text="Least Favorite Food:" FontWeight="Bold" FontSize="14"/>
                     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
@@ -112,7 +109,6 @@
                     </ItemsControl>
                 </StackPanel>
 
-                <!-- Plan Data Form -->
                 <TextBlock Text="Plan Details" FontSize="20" FontWeight="Bold" Margin="0,40,0,10"/>
 
                 <Grid ColumnDefinitions="180,*" RowDefinitions="Auto,Auto" RowSpacing="10">
@@ -133,7 +129,6 @@
                     </StackPanel>
                 </Grid>
 
-                <!-- Macro Split Section -->
                 <StackPanel Margin="0,15,0,0" Spacing="8">
                     <TextBlock Text="Macronutrient Split (Must sum to 100%):" FontWeight="Bold" FontSize="14"/>
                     <Grid ColumnDefinitions="180,*" RowDefinitions="Auto,Auto,Auto" RowSpacing="10">
@@ -157,7 +152,6 @@
                         FontSize="14"/>
             </StackPanel>
 
-            <!-- Meals Display -->
             <Separator Grid.Row="1" Margin="0,20" IsVisible="{Binding HasMeals}"/>
 
             <StackPanel Grid.Row="2" Spacing="15" IsVisible="{Binding HasMeals}">
@@ -196,26 +190,31 @@
                                 <StackPanel Spacing="12">
                                     <TextBlock Text="{Binding Key}" Classes="dayHeader"/>
                                     
-                                                                         <ItemsControl ItemsSource="{Binding Value}">
+                                    <ItemsControl ItemsSource="{Binding Value}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate DataType="models:Meal">
-                                                <!-- <Border Classes="mealBorder"> -->
-                                                    <Expander Classes="mealExpander" HorizontalAlignment="Stretch" Header="{Binding Name}">
-                                                        <ItemsControl ItemsSource="{Binding MealContents}">
-                                                            <ItemsControl.ItemTemplate>
-                                                                <DataTemplate DataType="models:MealContent">
-                                                                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
-                                                                        <TextBlock Grid.Column="0" Text="{Binding Food.Name}"/>
-                                                                        <TextBlock Grid.Column="1" Text="{Binding QuantityGrams, StringFormat={}{0} g}"/>
-                                                                    </Grid>
-                                                                </DataTemplate>
-                                                            </ItemsControl.ItemTemplate>
-                                                        </ItemsControl>
-                                                    </Expander>
-                                                <!-- </Border> -->
-                                            </DataTemplate>
+                                                <Expander Classes="mealExpander" HorizontalAlignment="Stretch">
+                                                    <Expander.Header>
+                                                        <StackPanel>
+                                                            <TextBlock Text="{Binding Name}" Classes="mealName"/>
+                                                            <TextBlock Text="{Binding MealType}" Classes="mealType"/>
+                                                        </StackPanel>
+                                                    </Expander.Header>
+                                                    <ItemsControl ItemsSource="{Binding MealContents}">
+                                                        <ItemsControl.ItemTemplate>
+                                                            <DataTemplate DataType="models:MealContent">
+                                                                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                                                                    <TextBlock Grid.Column="0" Text="{Binding Food.Name}"/>
+                                                                    <TextBlock Grid.Column="1" Text="{Binding QuantityGrams, StringFormat={}{0} g}"/>
+                                                                </Grid>
+                                                            </DataTemplate>
+                                                        </ItemsControl.ItemTemplate>
+                                                    </ItemsControl>
+                                                </Expander>
+                                                </DataTemplate>
                                         </ItemsControl.ItemTemplate>
-                                    </ItemsControl>                                </StackPanel>
+                                    </ItemsControl>
+                                </StackPanel>
                             </Border>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
